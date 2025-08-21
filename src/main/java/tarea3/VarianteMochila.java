@@ -20,6 +20,11 @@ public class VarianteMochila {
   }
 
   public static int c = 0;
+  /*
+   * Proponer y resolver al menos 5 consultas interesantes, sobre el problema de
+   * la mochila, utilizando diversas condiciones de los objetos. En lo posible,
+   * citar fuentes de las investigaciones.
+   */
 
   /*
    * 1. Encontrar todas las combinaciones de pesos de objetos y volumenes de
@@ -52,7 +57,7 @@ public class VarianteMochila {
   /*
    * 2. Combinaciones que contengan al menos un objeto de cierto color
    */
-  public static boolean contieneColor(LinkedList<Objeto> L, String colorBuscado) {
+  private static boolean contieneColor(LinkedList<Objeto> L, String colorBuscado) {
     for (Objeto o : L) {
       if (o.color.equals(colorBuscado))
         return true;
@@ -85,7 +90,7 @@ public class VarianteMochila {
   /*
    * 3. Combinaciones que contengan objetos con colores Diferentes
    */
-  public static boolean coloresDiferentes(LinkedList<Objeto> L) {
+  private static boolean coloresDiferentes(LinkedList<Objeto> L) {
     for (int i = 0; i < L.size(); i++) {
       for (int j = 0; j < L.size(); j++) {
         if (i != j) {
@@ -124,12 +129,12 @@ public class VarianteMochila {
   /*
    * 4. Combinaciones que contengan objetos con colores Diferentes
    */
-  public static boolean esCuadrado(int n) {
+  private static boolean esCuadrado(int n) {
     int raiz = (int) Math.sqrt(n);
     return raiz * raiz == n;
   }
 
-  public static boolean todosVolumenCuadrado(LinkedList<Objeto> L) {
+  private static boolean todosVolumenCuadrado(LinkedList<Objeto> L) {
     for (int i = 0; i < L.size(); i++) {
       if (!esCuadrado(L.get(i).volumen)) {
         return false;
@@ -165,7 +170,7 @@ public class VarianteMochila {
   /*
    * 5. Combinaciones que contengan objetos con colores Diferentes
    */
-  public static boolean esFibonacci(int n) {
+  private static boolean esFibonacci(int n) {
     int n1 = (5 * n * n) + 4;
     int n2 = (5 * n * n) - 4;
     return esCuadrado(n1) || esCuadrado(n2);

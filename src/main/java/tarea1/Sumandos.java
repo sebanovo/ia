@@ -18,7 +18,7 @@ public class Sumandos {
   /*
    * 1. Encontrar los sumandos de n.
    */
-  public static int suma(LinkedList<Integer> L1) {
+  private static int suma(LinkedList<Integer> L1) {
     int suma = 0;
     for (int i = 0; i < L1.size(); i++) {
       suma += L1.get(i);
@@ -48,7 +48,7 @@ public class Sumandos {
   /*
    * 2. Encontrar los sumandos iguales, tal que la suma sea n.
    */
-  public static boolean todosIguales(LinkedList<Integer> L1) {
+  private static boolean todosIguales(LinkedList<Integer> L1) {
     int primero = L1.get(0);
     for (int i = 0; i < L1.size(); i++) {
       if (primero != L1.get(i)) {
@@ -82,7 +82,7 @@ public class Sumandos {
   /*
    * 3. Encontrar los sumandos diferentes, tal que la suma sea n.
    */
-  public static boolean todosDiferentes(LinkedList<Integer> L1) {
+  private static boolean todosDiferentes(LinkedList<Integer> L1) {
     for (int i = 0; i < L1.size(); i++) {
       for (int j = 0; j < L1.size(); j++) {
         if (i != j) {
@@ -119,7 +119,7 @@ public class Sumandos {
   /*
    * 4. Encontrar los factores de n. Generar factores a partir de 2. n >= 2.
    */
-  public static int multiplicacion(LinkedList<Integer> L1) {
+  private static int multiplicacion(LinkedList<Integer> L1) {
     int factores = 1;
     for (int i = 0; i < L1.size(); i++) {
       factores *= L1.get(i);
@@ -197,7 +197,7 @@ public class Sumandos {
   /*
    * 7.1. Encontrar los sumandos primos de n.
    */
-  public static boolean tieneDividores(int n, int ini, int fin) {
+  private static boolean tieneDividores(int n, int ini, int fin) {
     if (ini > fin) {
       return false;
     }
@@ -207,13 +207,13 @@ public class Sumandos {
     return tieneDividores(n, ini + 1, fin);
   }
 
-  public static boolean esPrimo(int n) {
+  private static boolean esPrimo(int n) {
     if (n < 2)
       return false;
     return !tieneDividores(n, 2, n - 1);
   }
 
-  public static boolean todosPrimos(LinkedList<Integer> L1) {
+  private static boolean todosPrimos(LinkedList<Integer> L1) {
     for (int i = 0; i < L1.size(); i++) {
       if (!esPrimo(L1.get(i)))
         return false;
@@ -245,11 +245,11 @@ public class Sumandos {
   /*
    * 7.2. Encontrar los sumandos pares de n.
    */
-  public static boolean esPar(int n) {
+  private static boolean esPar(int n) {
     return n % 2 == 0;
   }
 
-  public static boolean todosPares(LinkedList<Integer> L1) {
+  private static boolean todosPares(LinkedList<Integer> L1) {
     for (Integer integer : L1) {
       if (!esPar(integer))
         return false;
@@ -282,12 +282,12 @@ public class Sumandos {
    * 7.3. Encontrar los sumandos cuadrados de n.
    */
 
-  public static boolean esCuadrado(int n) {
+  private static boolean esCuadrado(int n) {
     int raizCua = (int) Math.sqrt(n);
     return raizCua * raizCua == n;
   }
 
-  public static boolean todosCuadrados(LinkedList<Integer> L1) {
+  private static boolean todosCuadrados(LinkedList<Integer> L1) {
     for (int i = 0; i < L1.size(); i++) {
       if (!esCuadrado(L1.get(i)))
         return false;
@@ -320,13 +320,13 @@ public class Sumandos {
    * 7.4. Encontrar los sumandos fibonacci de n. (Todos los números que pertenecen
    * a la secuencia de fibonnaci)
    */
-  public static boolean esFibonacci(int n) {
+  private static boolean esFibonacci(int n) {
     int n1 = (5 * n * n) + 4;
     int n2 = (5 * n * n) - 4;
     return esCuadrado(n1) || esCuadrado(n2);
   }
 
-  public static boolean todosFibonacci(LinkedList<Integer> L1) {
+  private static boolean todosFibonacci(LinkedList<Integer> L1) {
     for (int i = 0; i < L1.size(); i++) {
       if (!esFibonacci(L1.get(i)))
         return false;
