@@ -86,7 +86,7 @@ public class Sumandos {
     for (int i = 0; i < L1.size(); i++) {
       for (int j = 0; j < L1.size(); j++) {
         if (i != j) {
-          if (L1.get(i) == L1.get(j)) {
+          if (L1.get(i).equals(L1.get(j))) {
             return false;
           }
         }
