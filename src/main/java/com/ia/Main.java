@@ -2,8 +2,7 @@ package com.ia;
 
 import java.util.*;
 
-// import tarea1.Sumandos;
-import tarea3.*;
+import tarea2.*;
 
 /**
  *

@@ -1,4 +1,4 @@
-package tarea3;
+package tarea2;
 
 import java.util.*;
 
