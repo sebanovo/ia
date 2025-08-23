@@ -226,13 +226,13 @@ public class Sumandos {
     }
   }
 
+  /*
+   * 6.2. Encontrar los sumandos cuadrados de n.
+   */
   private static boolean esCuadrado(int n) {
     int raizCua = (int) Math.sqrt(n);
     return raizCua * raizCua == n;
   }
-  /*
-   * 6.2. Encontrar los sumandos cuadrados de n.
-   */
 
   private static boolean todosCuadrados(LinkedList<Integer> L1) {
     for (int i = 0; i < L1.size(); i++) {

@@ -102,7 +102,7 @@ public class VarianteMochila {
     return true;
   }
 
-  public static void mochilaColorDiferente(
+  public static void mochilaColoresDiferentes(
       List<Objeto> L1,
       LinkedList<Objeto> L2,
       int maxP,
@@ -120,14 +120,14 @@ public class VarianteMochila {
     int k = i;
     while (k < L1.size()) {
       L2.add(L1.get(k));
-      mochilaColorDiferente(L1, L2, maxP, k + 1);
+      mochilaColoresDiferentes(L1, L2, maxP, k + 1);
       L2.removeLast();
       k++;
     }
   }
 
   /*
-   * 4. Combinaciones que contengan objetos con colores Diferentes
+   * 4. Combinaciones que contengan objetos con colores cuadrados
    */
   private static boolean esCuadrado(int n) {
     int raiz = (int) Math.sqrt(n);
@@ -168,7 +168,7 @@ public class VarianteMochila {
   }
 
   /*
-   * 5. Combinaciones que contengan objetos con colores Diferentes
+   * 5. Combinaciones que contengan objetos con volumenes fibonacci
    */
   private static boolean esFibonacci(int n) {
     int n1 = (5 * n * n) + 4;
