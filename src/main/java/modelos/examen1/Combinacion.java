@@ -1,4 +1,4 @@
-package tarea4;
+package modelos.examen1;
 
 import java.util.*;
 
@@ -66,5 +66,4 @@ public class Combinacion {
       k = k + 1;
     }
   }
-
 }
