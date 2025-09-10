@@ -1,0 +1,40 @@
+  public static LinkedList<LinkedList<Integer>> combinationSum(int n, int[] candidatos, boolean ordenImporta) {
+    if (n <= 0) {
+      throw new Error("the number should be major or equal to zero");
+    }
+    LinkedList<Integer> L1 = new LinkedList<Integer>();
+    LinkedList<LinkedList<Integer>> L2 = new LinkedList<LinkedList<Integer>>();
+    // ordenar
+    Arrays.sort(candidatos);
+    // validar > 0
+    for (int i = 0; i < candidatos.length; i++) {
+      if (candidatos[i] <= 0) {
+        throw new Error("the candidate should be major or equal to zero");
+      }
+    }
+    backtrakingCombinationSum(L1, L2, n, candidatos, 0, ordenImporta);
+    return L2;
+  }
+
+  public static void backtrakingCombinationSum(
+      LinkedList<Integer> L1,
+      LinkedList<LinkedList<Integer>> L2,
+      int n,
+      int[] candidatos,
+      int i,
+      boolean ordenImporta //
+  ) {
+    int suma = suma(L1);
+    if (suma > n) {
+      return;
+    } else if (suma == n) {
+      L2.add(new LinkedList<Integer>(L1));
+      return;
+    } else {
+      for (int k = ordenImporta ? i : 0; k < candidatos.length; k++) {
+        L1.add(candidatos[k]);
+        backtrakingCombinationSum(L1, L2, n, candidatos, k, ordenImporta);
+        L1.removeLast();
+      }
+    }
+  }
