@@ -3,11 +3,12 @@ package com.ia;
 
 import java.util.*;
 
-// import tarea1.*;
-// import tarea2.*;
-// import tarea3.*;
-// import tarea4.*;
-import modelos.examen1.*;
+// import tema1.tarea1.*;
+// import tema1.tarea2.*;
+// import tema1.tarea3.*;
+// import tema1.tarea4.*;
+// import modelos.examen1.*;
+// import tema2.tarea1.*;
 
 /**
  *
