@@ -1,4 +1,4 @@
-package tarea3;
+package tema1.tarea3;
 
 import java.util.*;
 
