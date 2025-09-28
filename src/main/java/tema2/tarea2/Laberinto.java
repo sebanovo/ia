@@ -1,4 +1,4 @@
-package tema2.tarea1;
+package tema2.tarea2;
 
 import java.util.*;
 
@@ -8,8 +8,41 @@ public class Laberinto {
    * cero, avanzar las casillas en sentido horario con movimientos de izquierda,
    * arriba, derecha y abajo. Hacer Algoritmos para los siguientes:
    */
+  /*
+   * Implementar los siguientes Algoritmos, utilizando la Estructura de Código de
+   * "LLamada Recursiva dentro de un Ciclo". Las posiciones a dónde se pueden
+   * mover de una posición, traslatar a una Lista de Reglas.
+   */
+  public static class Regla {
+
+    public int fil;
+    public int col;
+
+    public Regla(int i, int j) {
+      this.fil = i;
+      this.col = j;
+    }
+  }
+
   public static boolean posValida(int[][] m, int i, int j) {
     return i >= 0 && i < m.length && j >= 0 && j < m[i].length && m[i][j] == 0;
+  }
+
+  public static LinkedList<Regla> reglasAplicables(int[][] m, int i, int j) {
+    LinkedList<Regla> L1 = new LinkedList<>();
+    if (posValida(m, i, j - 1)) {
+      L1.add(new Regla(i, j - 1));
+    }
+    if (posValida(m, i - 1, j)) {
+      L1.add(new Regla(i - 1, j));
+    }
+    if (posValida(m, i, j + 1)) {
+      L1.add(new Regla(i, j + 1));
+    }
+    if (posValida(m, i + 1, j)) {
+      L1.add(new Regla(i + 1, j));
+    }
+    return L1;
   }
 
   public static void mostrar(int[][] m) {
@@ -21,6 +54,10 @@ public class Laberinto {
       s = s + "\n";
     }
     System.out.println(s);
+  }
+
+  public static Regla elegirRegla(LinkedList<Regla> L1) {
+    return L1.removeFirst();
   }
 
   /*
@@ -35,17 +72,17 @@ public class Laberinto {
     if (!posValida(m, i, j)) {
       return;
     }
-
     m[i][j] = paso;
     if (i == iFin && j == jFin) {
       mostrar(m);
       c++;
     }
-    laberinto1A(m, i, j - 1, iFin, jFin, paso + 1);
-    laberinto1A(m, i - 1, j, iFin, jFin, paso + 1);
-    laberinto1A(m, i, j + 1, iFin, jFin, paso + 1);
-    laberinto1A(m, i + 1, j, iFin, jFin, paso + 1);
-    m[i][j] = 0;
+    LinkedList<Regla> L1 = reglasAplicables(m, i, j);
+    while (!L1.isEmpty()) {
+      Regla R = elegirRegla(L1);
+      laberinto1A(m, R.fil, R.col, iFin, jFin, paso + 1);
+      m[R.fil][R.col] = 0;
+    }
   }
 
   /*
@@ -68,19 +105,19 @@ public class Laberinto {
     if (!posValida(m, i, j)) {
       return;
     }
-
     m[i][j] = paso;
     if (i == iFin && j == jFin) {
-      if (!tieneCeros(m)) {
+      if (tieneCeros(m)) {
         mostrar(m);
         c++;
       }
     }
-    laberinto1B(m, i, j - 1, iFin, jFin, paso + 1);
-    laberinto1B(m, i - 1, j, iFin, jFin, paso + 1);
-    laberinto1B(m, i, j + 1, iFin, jFin, paso + 1);
-    laberinto1B(m, i + 1, j, iFin, jFin, paso + 1);
-    m[i][j] = 0;
+    LinkedList<Regla> L1 = reglasAplicables(m, i, j);
+    while (!L1.isEmpty()) {
+      Regla R = elegirRegla(L1);
+      laberinto1B(m, R.fil, R.col, iFin, jFin, paso + 1);
+      m[R.fil][R.col] = 0;
+    }
   }
 
   /*
@@ -92,7 +129,6 @@ public class Laberinto {
     if (!posValida(m, i, j)) {
       return;
     }
-
     m[i][j] = paso;
     if (i == iFin && j == jFin) {
       if (tieneCeros(m)) {
@@ -100,11 +136,12 @@ public class Laberinto {
         c++;
       }
     }
-    laberinto1C(m, i, j - 1, iFin, jFin, paso + 1);
-    laberinto1C(m, i - 1, j, iFin, jFin, paso + 1);
-    laberinto1C(m, i, j + 1, iFin, jFin, paso + 1);
-    laberinto1C(m, i + 1, j, iFin, jFin, paso + 1);
-    m[i][j] = 0;
+    LinkedList<Regla> L1 = reglasAplicables(m, i, j);
+    while (!L1.isEmpty()) {
+      Regla R = elegirRegla(L1);
+      laberinto1C(m, R.fil, R.col, iFin, jFin, paso + 1);
+      m[R.fil][R.col] = 0;
+    }
   }
 
   /*
@@ -119,7 +156,6 @@ public class Laberinto {
     if (!posValida(m, i, j)) {
       return;
     }
-
     m[i][j] = paso;
     if (i == iFin && j == jFin) {
       if (paso > longitudMaxima) {
@@ -130,13 +166,13 @@ public class Laberinto {
         c++;
         mostrar(m);
       }
-    } else {
-      laberinto1D(m, i, j - 1, iFin, jFin, paso + 1);
-      laberinto1D(m, i - 1, j, iFin, jFin, paso + 1);
-      laberinto1D(m, i, j + 1, iFin, jFin, paso + 1);
-      laberinto1D(m, i + 1, j, iFin, jFin, paso + 1);
     }
-    m[i][j] = 0;
+    LinkedList<Regla> L1 = reglasAplicables(m, i, j);
+    while (!L1.isEmpty()) {
+      Regla R = elegirRegla(L1);
+      laberinto1D(m, R.fil, R.col, iFin, jFin, paso + 1);
+      m[R.fil][R.col] = 0;
+    }
   }
 
   /*
@@ -157,19 +193,18 @@ public class Laberinto {
     if (!posValidaConParedes(m, i, j)) {
       return;
     }
-
     if (m[i][j] == 0) {
       m[i][j] = paso;
       if (i == iFin && j == jFin) {
         mostrar(m);
         c++;
-      } else {
-        laberinto2(m, i, j - 1, iFin, jFin, paso + 1);
-        laberinto2(m, i - 1, j, iFin, jFin, paso + 1);
-        laberinto2(m, i, j + 1, iFin, jFin, paso + 1);
-        laberinto2(m, i + 1, j, iFin, jFin, paso + 1);
       }
-      m[i][j] = 0;
+      LinkedList<Regla> L1 = reglasAplicables(m, i, j);
+      while (!L1.isEmpty()) {
+        Regla R = elegirRegla(L1);
+        laberinto2(m, R.fil, R.col, iFin, jFin, paso + 1);
+        m[R.fil][R.col] = 0;
+      }
     }
   }
 
@@ -178,25 +213,50 @@ public class Laberinto {
    * Laberinto, también se puede mover una casilla por las diagonales. (8
    * posibilidades de movimientos)
    */
+  public static LinkedList<Regla> reglasAplicablesConDiagonales(int[][] m, int i, int j) {
+    LinkedList<Regla> L1 = new LinkedList<>();
+    if (posValida(m, i, j - 1)) {
+      L1.add(new Regla(i, j - 1));
+    }
+    if (posValida(m, i - 1, j)) {
+      L1.add(new Regla(i - 1, j));
+    }
+    if (posValida(m, i, j + 1)) {
+      L1.add(new Regla(i, j + 1));
+    }
+    if (posValida(m, i + 1, j)) {
+      L1.add(new Regla(i + 1, j));
+    }
+    if (posValida(m, i - 1, j - 1)) {
+      L1.add(new Regla(i - 1, j - 1));
+    }
+    if (posValida(m, i - 1, j + 1)) {
+      L1.add(new Regla(i - 1, j + 1));
+    }
+    if (posValida(m, i + 1, j + 1)) {
+      L1.add(new Regla(i + 1, j + 1));
+    }
+    if (posValida(m, i + 1, j - 1)) {
+      L1.add(new Regla(i + 1, j - 1));
+    }
+    return L1;
+  }
+
   public static void laberinto3(int[][] m, int i, int j, int iFin, int jFin, int paso) {
     if (!posValida(m, i, j)) {
       return;
     }
-
     m[i][j] = paso;
     if (i == iFin && j == jFin) {
       mostrar(m);
       c++;
     }
-    laberinto3(m, i, j - 1, iFin, jFin, paso + 1);
-    laberinto3(m, i - 1, j - 1, iFin, jFin, paso + 1);
-    laberinto3(m, i - 1, j, iFin, jFin, paso + 1);
-    laberinto3(m, i - 1, j + 1, iFin, jFin, paso + 1);
-    laberinto3(m, i, j + 1, iFin, jFin, paso + 1);
-    laberinto3(m, i + 1, j + 1, iFin, jFin, paso + 1);
-    laberinto3(m, i + 1, j, iFin, jFin, paso + 1);
-    laberinto3(m, i + 1, j - 1, iFin, jFin, paso + 1);
-    m[i][j] = 0;
+    LinkedList<Regla> L1 = reglasAplicablesConDiagonales(m, i, j);
+    while (!L1.isEmpty()) {
+      Regla R = elegirRegla(L1);
+      laberinto3(m, R.fil, R.col, iFin, jFin, paso + 1);
+      m[R.fil][R.col] = 0;
+    }
   }
 
   /*
@@ -204,21 +264,38 @@ public class Laberinto {
    * Laberinto, solo por la diagonales, no horizontal ni vertical. (4
    * posibilidades de movimientos)
    */
+  public static LinkedList<Regla> reglasAplicablesSinDiagonales(int[][] m, int i, int j) {
+    LinkedList<Regla> L1 = new LinkedList<>();
+    if (posValida(m, i - 1, j - 1)) {
+      L1.add(new Regla(i - 1, j - 1));
+    }
+    if (posValida(m, i - 1, j + 1)) {
+      L1.add(new Regla(i - 1, j + 1));
+    }
+    if (posValida(m, i + 1, j + 1)) {
+      L1.add(new Regla(i + 1, j + 1));
+    }
+    if (posValida(m, i + 1, j - 1)) {
+      L1.add(new Regla(i + 1, j - 1));
+    }
+    return L1;
+  }
+
   public static void laberinto4(int[][] m, int i, int j, int iFin, int jFin, int paso) {
     if (!posValida(m, i, j)) {
       return;
     }
-
     m[i][j] = paso;
     if (i == iFin && j == jFin) {
       mostrar(m);
       c++;
     }
-    laberinto4(m, i - 1, j - 1, iFin, jFin, paso + 1);
-    laberinto4(m, i - 1, j + 1, iFin, jFin, paso + 1);
-    laberinto4(m, i + 1, j + 1, iFin, jFin, paso + 1);
-    laberinto4(m, i + 1, j - 1, iFin, jFin, paso + 1);
-    m[i][j] = 0;
+    LinkedList<Regla> L1 = reglasAplicablesSinDiagonales(m, i, j);
+    while (!L1.isEmpty()) {
+      Regla R = elegirRegla(L1);
+      laberinto4(m, R.fil, R.col, iFin, jFin, paso + 1);
+      m[R.fil][R.col] = 0;
+    }
   }
 
   /*
@@ -244,17 +321,17 @@ public class Laberinto {
     if (!posValida(m, i, j)) {
       return;
     }
-
     m[i][j] = paso;
     if (i == iFin && j == jFin) {
       L.add(Arrays.stream(m).map(fila -> fila.clone()).toArray($ -> m.clone()));
       c++;
     }
-    laberinto5(m, L, i, j - 1, iFin, jFin, paso + 1);
-    laberinto5(m, L, i - 1, j, iFin, jFin, paso + 1);
-    laberinto5(m, L, i, j + 1, iFin, jFin, paso + 1);
-    laberinto5(m, L, i + 1, j, iFin, jFin, paso + 1);
-    m[i][j] = 0;
+    LinkedList<Regla> L1 = reglasAplicables(m, i, j);
+    while (!L1.isEmpty()) {
+      Regla R = elegirRegla(L1);
+      laberinto5(m, L, R.fil, R.col, iFin, jFin, paso + 1);
+      m[R.fil][R.col] = 0;
+    }
   }
 
   /*
@@ -262,24 +339,49 @@ public class Laberinto {
    * 1) y 2). En este caso, avanzar según el movimiento del caballo.
    * (8-posibilidades de movimientos).
    */
+  public static LinkedList<Regla> reglasAplicablesCaballo(int[][] m, int i, int j) {
+    LinkedList<Regla> L1 = new LinkedList<>();
+    if (posValida(m, i - 2, j - 1)) {
+      L1.add(new Regla(i - 2, j - 1));
+    }
+    if (posValida(m, i - 2, j + 1)) {
+      L1.add(new Regla(i - 2, j + 1));
+    }
+    if (posValida(m, i - 1, j + 2)) {
+      L1.add(new Regla(i - 1, j + 2));
+    }
+    if (posValida(m, i + 1, j + 2)) {
+      L1.add(new Regla(i + 1, j + 2));
+    }
+    if (posValida(m, i + 2, j + 1)) {
+      L1.add(new Regla(i + 2, j + 1));
+    }
+    if (posValida(m, i + 2, j - 1)) {
+      L1.add(new Regla(i + 2, j - 1));
+    }
+    if (posValida(m, i + 1, j - 2)) {
+      L1.add(new Regla(i + 1, j - 2));
+    }
+    if (posValida(m, i - 1, j - 2)) {
+      L1.add(new Regla(i - 1, j - 2));
+    }
+    return L1;
+  }
+
   public static void laberinto6(int[][] m, int i, int j, int iFin, int jFin, int paso) {
     if (!posValida(m, i, j)) {
       return;
     }
-
     m[i][j] = paso;
     if (i == iFin && j == jFin) {
       mostrar(m);
       c++;
     }
-    laberinto6(m, i - 2, j - 1, iFin, jFin, paso + 1);
-    laberinto6(m, i - 2, j + 1, iFin, jFin, paso + 1);
-    laberinto6(m, i - 1, j + 2, iFin, jFin, paso + 1);
-    laberinto6(m, i + 1, j + 2, iFin, jFin, paso + 1);
-    laberinto6(m, i + 2, j + 1, iFin, jFin, paso + 1);
-    laberinto6(m, i + 2, j - 1, iFin, jFin, paso + 1);
-    laberinto6(m, i + 1, j - 2, iFin, jFin, paso + 1);
-    laberinto6(m, i - 1, j - 2, iFin, jFin, paso + 1);
-    m[i][j] = 0;
+    LinkedList<Regla> L1 = reglasAplicablesCaballo(m, i, j);
+    while (!L1.isEmpty()) {
+      Regla R = elegirRegla(L1);
+      laberinto6(m, R.fil, R.col, iFin, jFin, paso + 1);
+      m[R.fil][R.col] = 0;
+    }
   }
 }
