@@ -107,7 +107,7 @@ public class Laberinto {
     }
     m[i][j] = paso;
     if (i == iFin && j == jFin) {
-      if (tieneCeros(m)) {
+      if (!tieneCeros(m)) {
         mostrar(m);
         c++;
       }
