@@ -15,7 +15,7 @@ public class Laberinto {
   /*
   Rey
   // @formatter:off
-            _____                    _____                _____          
+          _____                    _____                _____          
          /\    \                  /\    \              |\    \         
         /::\    \                /::\    \             |:\____\        
        /::::\    \              /::::\    \            |::|   |        
@@ -1423,5 +1423,4 @@ public class Laberinto {
       m[R.fil][R.col] = 0;
     }
   }
-
 }
