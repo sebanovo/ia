@@ -10,7 +10,8 @@ import java.util.*;
 // import modelos.examen1.*;
 // import tema2.tarea1.*;
 // import tema2.tarea2.*;
-import tema2.tarea3.*;
+// import tema2.tarea3.*;
+import tema2.tarea4.*;
 
 /**
  *
@@ -23,19 +24,28 @@ public class Main {
 
   public static void main(String[] args) {
     System.out.println();
-    int a = 3, b = 3;
-    int[][] m = new int[a][b];
-    // Rey
-    Laberinto.laberintoReyA(m, 0, 0, a - 1, b - 1, 1);
-    System.out.println("Cantidad: " + Laberinto.c);
-    // Laberinto.laberintoReyB(m, 0, 0, a - 1, b - 1, 1);
+    // int a = 3, b = 3;
+    // int[][] m = new int[a][b];
+    // Caballo
+    // Laberinto.laberintoDamaA(m, 0, 0, a - 1, b - 1, 1);
     // System.out.println("Cantidad: " + Laberinto.c);
-    // Laberinto.laberintoReyC(m, 0, 0, a - 1, b - 1, 1);
+    // Laberinto.laberintoCaballoB(m, 0, 0, a - 1, b - 1, 1);
     // System.out.println("Cantidad: " + Laberinto.c);
-    // Laberinto.laberintoReyD(m, 0, 0, a - 1, b - 1, 1);
+    // Laberinto.laberintoCaballoC(m, 0, 0, a - 1, b - 1, 1);
+    // System.out.println("Cantidad: " + Laberinto.c);
+    // Laberinto.laberintoCaballoD(m, 0, 0, a - 1, b - 1, 1);
     // System.out.println("Cantidad: " + Laberinto.c);
     // LinkedList<int[][]> L = new LinkedList<>();
-    // Laberinto.laberintoRey(m, L, 0, 0, a - 1, b - 1, 1);
+    // Laberinto.laberintoCaballo(m, L, 0, 0, a - 1, b - 1, 1);
     // System.out.println("Cantidad: " + L.size());
+
+    int a = 5;
+    int b = 5;
+    int[][] m = new int[a][b];
+    if (Laberinto.laberintoDamaConHeuristica(m, 0, 0, a - 1, b - 1, 1)) {
+      Laberinto.mostrar(m);
+    } else {
+      System.out.println("# No existe solución");
+    }
   }
 }
