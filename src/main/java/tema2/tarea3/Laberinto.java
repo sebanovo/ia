@@ -60,26 +60,17 @@ public class Laberinto {
 
   public static LinkedList<Regla> reglasAplicablesRey(int[][] m, int i, int j) {
     LinkedList<Regla> L1 = new LinkedList<>();
-    int j1 = j - 1;
-    while (posValida(m, i, j1)) {
-      L1.add(new Regla(i, j1));
-      j1 = j1 - 1;
+    if (posValida(m, i, j - 1)) { // ⬆
+      L1.add(new Regla(i, j - 1));
     }
-    int i1 = i - 1;
-    while (posValida(m, i1, j)) {
-      L1.add(new Regla(i1, j));
-      i1 = i1 - 1;
+    if (posValida(m, i - 1, j)) { // ⬅
+      L1.add(new Regla(i - 1, j));
     }
-
-    j1 = j + 1;
-    while (posValida(m, i, j1)) {
-      L1.add(new Regla(i, j1));
-      j1 = j1 + 1;
+    if (posValida(m, i, j + 1)) { // ⬇
+      L1.add(new Regla(i, j + 1));
     }
-    i1 = i + 1;
-    while (posValida(m, i1, j)) {
-      L1.add(new Regla(i1, j));
-      i1 = i1 + 1;
+    if (posValida(m, i + 1, j)) { // ➡
+      L1.add(new Regla(i + 1, j));
     }
     return L1;
   }
@@ -668,23 +659,23 @@ public class Laberinto {
   public static LinkedList<Regla> reglasAplicablesTorres(int[][] m, int i, int j) {
     LinkedList<Regla> L1 = new LinkedList<>();
     int j1 = j - 1;
-    while (posValida(m, i, j1)) {
+    while (posValida(m, i, j1)) { // ⬆
       L1.add(new Regla(i, j1));
       j1 = j1 - 1;
     }
     int i1 = i - 1;
-    while (posValida(m, i1, j)) {
+    while (posValida(m, i1, j)) { // ⬅
       L1.add(new Regla(i1, j));
       i1 = i1 - 1;
     }
 
     j1 = j + 1;
-    while (posValida(m, i, j1)) {
+    while (posValida(m, i, j1)) { // ⬇
       L1.add(new Regla(i, j1));
       j1 = j1 + 1;
     }
     i1 = i + 1;
-    while (posValida(m, i1, j)) {
+    while (posValida(m, i1, j)) { // ➡
       L1.add(new Regla(i1, j));
       i1 = i1 + 1;
     }
@@ -941,7 +932,7 @@ public class Laberinto {
   public static LinkedList<Regla> reglasAplicablesAlfil(int[][] m, int i, int j) {
     LinkedList<Regla> L1 = new LinkedList<>();
     int i1 = i - 1, j1 = j - 1;
-    while (posValida(m, i1, j1)) {
+    while (posValida(m, i1, j1)) { // ↖
       L1.add(new Regla(i1, j1));
       i1--;
       j1--;
@@ -949,7 +940,7 @@ public class Laberinto {
 
     i1 = i - 1;
     j1 = j + 1;
-    while (posValida(m, i1, j1)) {
+    while (posValida(m, i1, j1)) { // ↙
       L1.add(new Regla(i1, j1));
       i1--;
       j1++;
@@ -957,7 +948,7 @@ public class Laberinto {
 
     i1 = i + 1;
     j1 = j - 1;
-    while (posValida(m, i1, j1)) {
+    while (posValida(m, i1, j1)) { // ↗
       L1.add(new Regla(i1, j1));
       i1++;
       j1--;
@@ -965,7 +956,7 @@ public class Laberinto {
 
     i1 = i + 1;
     j1 = j + 1;
-    while (posValida(m, i1, j1)) {
+    while (posValida(m, i1, j1)) { // ↘
       L1.add(new Regla(i1, j1));
       i1++;
       j1++;
