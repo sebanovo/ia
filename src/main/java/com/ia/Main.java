@@ -40,9 +40,9 @@ public class Main {
     // Laberinto.laberintoCaballo(m, L, 0, 0, a - 1, b - 1, 1);
     // System.out.println("Cantidad: " + L.size());
 
-    int n = 4;
+    int n = 1;
     int[][] m = new int[n][n];
-    if (NReinas.nReinasConHeuristica(m, 1)) {
+    if (NReinas.nReinasSinHeuristica(m, 1)) {
       NReinas.mostrar(m);
       System.out.println("Vueltas: " + NReinas.vueltas);
     } else {

@@ -37,7 +37,7 @@ public class NReinas {
     return true;
   }
 
-  public static boolean estanDiagnoalesVacias(int[][] m, int i, int j) {
+  public static boolean estanDiagonalesVacias(int[][] m, int i, int j) {
     for (int k1 = i - 1, k2 = j - 1; k1 >= 0 && k2 >= 0; k1--, k2--) {
       if (m[k1][k2] != 0)
         return false;
@@ -60,7 +60,7 @@ public class NReinas {
   }
 
   public static boolean hayDamaEnRango(int[][] m, int i, int j) {
-    return !estanDiagnoalesVacias(m, i, j) || !estanRectasVacias(m, i, j);
+    return !estanDiagonalesVacias(m, i, j) || !estanRectasVacias(m, i, j);
   }
 
   public static boolean posValida(int[][] m, int i, int j) {
@@ -95,7 +95,6 @@ public class NReinas {
       Regla R = elegirReglaA(L1, m);
       m[R.fil][R.col] = paso;
       if (nReinasSinHeuristica(m, paso + 1)) {
-        vueltas++;
         return true;
       }
       m[R.fil][R.col] = 0;
