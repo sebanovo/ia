@@ -11,7 +11,8 @@ import java.util.*;
 // import tema2.tarea1.*;
 // import tema2.tarea2.*;
 // import tema2.tarea3.*;
-import tema2.tarea4.*;
+// import tema2.tarea4.*;
+import tema3.tarea1.*;
 
 /**
  *
@@ -39,13 +40,14 @@ public class Main {
     // Laberinto.laberintoCaballo(m, L, 0, 0, a - 1, b - 1, 1);
     // System.out.println("Cantidad: " + L.size());
 
-    int a = 5;
-    int b = 5;
-    int[][] m = new int[a][b];
-    if (Laberinto.laberintoDamaConHeuristica(m, 0, 0, a - 1, b - 1, 1)) {
-      Laberinto.mostrar(m);
+    int n = 4;
+    int[][] m = new int[n][n];
+    if (NReinas.nReinasConHeuristica(m, 1)) {
+      NReinas.mostrar(m);
+      System.out.println("Vueltas: " + NReinas.vueltas);
     } else {
-      System.out.println("# No existe solución");
+      System.out.println("# No existe solucion");
+      System.out.println("Vueltas: " + NReinas.vueltas);
     }
   }
 }
