@@ -75,11 +75,11 @@ public class NReinas {
     return L1.remove(L1.size() / 2);
   }
 
-  public static LinkedList<Regla> reglasAplicablesDama(int[][] m, int i, int j) {
+  public static LinkedList<Regla> reglasAplicablesDama(int[][] m, int paso) {
     LinkedList<Regla> L1 = new LinkedList<>();
-    for (int k = 0; k < m[i].length; k++) {
-      if (posValida(m, i, k))
-        L1.add(new Regla(i, k));
+    for (int k = 0; k < m[paso].length; k++) {
+      if (posValida(m, paso, k))
+        L1.add(new Regla(paso, k));
     }
     return L1;
   }
@@ -90,7 +90,7 @@ public class NReinas {
     if (paso > m.length)
       return true;
 
-    LinkedList<Regla> L1 = reglasAplicablesDama(m, paso - 1, paso - 1);
+    LinkedList<Regla> L1 = reglasAplicablesDama(m, paso - 1);
     while (!L1.isEmpty()) {
       Regla R = elegirReglaA(L1, m);
       m[R.fil][R.col] = paso;
@@ -107,7 +107,7 @@ public class NReinas {
     if (paso > m.length)
       return true;
 
-    LinkedList<Regla> L1 = reglasAplicablesDama(m, paso - 1, paso - 1);
+    LinkedList<Regla> L1 = reglasAplicablesDama(m, paso - 1);
     while (!L1.isEmpty()) {
       Regla R = elegirReglaB(L1, m);
       m[R.fil][R.col] = paso;
