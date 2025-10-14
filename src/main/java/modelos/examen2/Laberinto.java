@@ -1,27 +1,8 @@
-package tema2.tarea4;
+package modelos.examen2;
 
 import java.util.*;
 
 public class Laberinto {
-  /*
-   * Aplicar el Algoritmo de backTrack(), a los siguientes problemas. El Algoritmo
-   * debe encontrar el primer camino solución, desde la posición inicial a la
-   * posición final.
-   * 
-   * Aplicar el Algoritmo de exploración de caminos: sin heurística (Elige la
-   * primera regla) y con heurística (Elige la mejor regla, por distancia).
-   * Comentar los resultados para cada uno de ellos, respecto a la longitud de
-   * camino y/o cantidad de pasos para llegar a la solución.
-   * 
-   * Ejecutar los siguientes problemas con y sin Atajos para valores de n y m
-   * relativamente grandes.
-   * 
-   * 1. El problema de Movimientos del Rey.
-   * 2. El problema del Salto de Caballo.
-   * 3. El problema de Movimientos de la Torre.
-   * 4. El problema de Movimientos del Alfil.
-   * 5. El problema de Movimientos de la Reina.
-   */
   public static class Regla {
 
     public int fil;
@@ -31,6 +12,10 @@ public class Laberinto {
       this.fil = i;
       this.col = j;
     }
+  }
+
+  public static boolean posValida(int[][] m, int i, int j) {
+    return i >= 0 && i < m.length && j >= 0 && j < m[i].length && m[i][j] == 0;
   }
 
   public static void mostrar(int[][] m) {
@@ -44,30 +29,11 @@ public class Laberinto {
     System.out.println(s);
   }
 
-  public static boolean posValida(int[][] m, int i, int j) {
-    return i >= 0 && i < m.length && j >= 0 && j < m[i].length && m[i][j] == 0;
-  }
-
   public static Regla elegirRegla(LinkedList<Regla> L1) {
     return L1.removeFirst();
   }
 
-  public static double distancia(int x1, int y1, int x2, int y2) {
-    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-  }
-
-  public static Regla elegirMejorRegla(LinkedList<Regla> L1, int iFin, int jFin) {
-    double distMenor = Double.MAX_VALUE;
-    int posMenor = 0;
-    for (int i = 0; i < L1.size(); i++) {
-      double dist = distancia(L1.get(i).fil, L1.get(i).col, iFin, jFin);
-      if (dist < distMenor) {
-        distMenor = dist;
-        posMenor = i;
-      }
-    }
-    return L1.remove(posMenor);
-  }
+  public static int c = 0;
   /*
   Rey
   // @formatter:off
@@ -97,54 +63,38 @@ public class Laberinto {
 
   public static LinkedList<Regla> reglasAplicablesRey(int[][] m, int i, int j) {
     LinkedList<Regla> L1 = new LinkedList<>();
-    if (posValida(m, i, j - 1)) {
+    if (posValida(m, i, j - 1)) { // ⬆
       L1.add(new Regla(i, j - 1));
     }
-    if (posValida(m, i - 1, j)) {
+    if (posValida(m, i - 1, j)) { // ⬅
       L1.add(new Regla(i - 1, j));
     }
-    if (posValida(m, i, j + 1)) {
+    if (posValida(m, i, j + 1)) { // ⬇
       L1.add(new Regla(i, j + 1));
     }
-    if (posValida(m, i + 1, j)) {
+    if (posValida(m, i + 1, j)) { // ➡
       L1.add(new Regla(i + 1, j));
     }
     return L1;
   }
 
-  public static boolean laberintoReySinHeuristica(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+  public static void laberintoRey(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+    if (!posValida(m, i, j)) {
+      return;
+    }
     m[i][j] = paso;
     if (i == iFin && j == jFin) {
-      return true;
+      mostrar(m);
+      c++;
     }
-
     LinkedList<Regla> L1 = reglasAplicablesRey(m, i, j);
     while (!L1.isEmpty()) {
       Regla R = elegirRegla(L1);
-      if (laberintoReySinHeuristica(m, R.fil, R.col, iFin, jFin, paso + 1)) {
-        return true;
-      }
+      laberintoRey(m, R.fil, R.col, iFin, jFin, paso + 1);
       m[R.fil][R.col] = 0;
     }
-    return false;
   }
 
-  public static boolean laberintoReyConHeuristica(int[][] m, int i, int j, int iFin, int jFin, int paso) {
-    m[i][j] = paso;
-    if (i == iFin && j == jFin) {
-      return true;
-    }
-
-    LinkedList<Regla> L1 = reglasAplicablesRey(m, i, j);
-    while (!L1.isEmpty()) {
-      Regla R = elegirMejorRegla(L1, iFin, jFin);
-      if (laberintoReyConHeuristica(m, R.fil, R.col, iFin, jFin, paso + 1)) {
-        return true;
-      }
-      m[R.fil][R.col] = 0;
-    }
-    return false;
-  }
   /*
   Caballo
   // @formatter:off
@@ -214,7 +164,11 @@ public class Laberinto {
          ~~                                                                
   // @formatter:on
   */
-
+  /*
+   * a) Algoritmo para mostrar todos los caminos posibles desde una posición
+   * inicial a una posición final. Además, mostrar la cantidad de soluciones
+   * posibles.
+   */
   public static LinkedList<Regla> reglasAplicablesCaballo(int[][] m, int i, int j) {
     LinkedList<Regla> L1 = new LinkedList<>();
     if (posValida(m, i - 2, j - 1)) {
@@ -244,38 +198,21 @@ public class Laberinto {
     return L1;
   }
 
-  public static boolean laberintoCaballoSinHeuristica(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+  public static void laberintoCaballo(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+    if (!posValida(m, i, j)) {
+      return;
+    }
     m[i][j] = paso;
     if (i == iFin && j == jFin) {
-      return true;
+      mostrar(m);
+      c++;
     }
-
     LinkedList<Regla> L1 = reglasAplicablesCaballo(m, i, j);
     while (!L1.isEmpty()) {
       Regla R = elegirRegla(L1);
-      if (laberintoCaballoSinHeuristica(m, R.fil, R.col, iFin, jFin, paso + 1)) {
-        return true;
-      }
+      laberintoCaballo(m, R.fil, R.col, iFin, jFin, paso + 1);
       m[R.fil][R.col] = 0;
     }
-    return false;
-  }
-
-  public static boolean laberintoCaballoConHeuristica(int[][] m, int i, int j, int iFin, int jFin, int paso) {
-    m[i][j] = paso;
-    if (i == iFin && j == jFin) {
-      return true;
-    }
-
-    LinkedList<Regla> L1 = reglasAplicablesCaballo(m, i, j);
-    while (!L1.isEmpty()) {
-      Regla R = elegirMejorRegla(L1, iFin, jFin);
-      if (laberintoCaballoConHeuristica(m, R.fil, R.col, iFin, jFin, paso + 1)) {
-        return true;
-      }
-      m[R.fil][R.col] = 0;
-    }
-    return false;
   }
 
   /*
@@ -352,39 +289,23 @@ public class Laberinto {
     return L1;
   }
 
-  public static boolean laberintoTorreSinHeuristica(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+  public static void laberintoTorre(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+    if (!posValida(m, i, j)) {
+      return;
+    }
     m[i][j] = paso;
     if (i == iFin && j == jFin) {
-      return true;
+      mostrar(m);
+      c++;
     }
-
     LinkedList<Regla> L1 = reglasAplicablesTorre(m, i, j);
     while (!L1.isEmpty()) {
       Regla R = elegirRegla(L1);
-      if (laberintoTorreSinHeuristica(m, R.fil, R.col, iFin, jFin, paso + 1)) {
-        return true;
-      }
+      laberintoTorre(m, R.fil, R.col, iFin, jFin, paso + 1);
       m[R.fil][R.col] = 0;
     }
-    return false;
   }
 
-  public static boolean laberintoTorreConHeuristica(int[][] m, int i, int j, int iFin, int jFin, int paso) {
-    m[i][j] = paso;
-    if (i == iFin && j == jFin) {
-      return true;
-    }
-
-    LinkedList<Regla> L1 = reglasAplicablesTorre(m, i, j);
-    while (!L1.isEmpty()) {
-      Regla R = elegirMejorRegla(L1, iFin, jFin);
-      if (laberintoTorreConHeuristica(m, R.fil, R.col, iFin, jFin, paso + 1)) {
-        return true;
-      }
-      m[R.fil][R.col] = 0;
-    }
-    return false;
-  }
   /*
   Alfil
   // @formatter:off
@@ -433,7 +354,6 @@ public class Laberinto {
          \/____/                  \/____/                                                                          
   // @formatter:on
   */
-
   public static LinkedList<Regla> reglasAplicablesAlfil(int[][] m, int i, int j) {
     LinkedList<Regla> L1 = new LinkedList<>();
     int i1 = i - 1, j1 = j - 1;
@@ -470,39 +390,23 @@ public class Laberinto {
     return L1;
   }
 
-  public static boolean laberintoAlfilSinHeuristica(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+  public static void laberintoAlfil(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+    if (!posValida(m, i, j)) {
+      return;
+    }
     m[i][j] = paso;
     if (i == iFin && j == jFin) {
-      return true;
+      mostrar(m);
+      c++;
     }
-
     LinkedList<Regla> L1 = reglasAplicablesAlfil(m, i, j);
     while (!L1.isEmpty()) {
       Regla R = elegirRegla(L1);
-      if (laberintoAlfilSinHeuristica(m, R.fil, R.col, iFin, jFin, paso + 1)) {
-        return true;
-      }
+      laberintoAlfil(m, R.fil, R.col, iFin, jFin, paso + 1);
       m[R.fil][R.col] = 0;
     }
-    return false;
   }
 
-  public static boolean laberintoAlfilConHeuristica(int[][] m, int i, int j, int iFin, int jFin, int paso) {
-    m[i][j] = paso;
-    if (i == iFin && j == jFin) {
-      return true;
-    }
-
-    LinkedList<Regla> L1 = reglasAplicablesAlfil(m, i, j);
-    while (!L1.isEmpty()) {
-      Regla R = elegirMejorRegla(L1, iFin, jFin);
-      if (laberintoAlfilConHeuristica(m, R.fil, R.col, iFin, jFin, paso + 1)) {
-        return true;
-      }
-      m[R.fil][R.col] = 0;
-    }
-    return false;
-  }
   /*
   Dama
   // @formatter:off
@@ -551,7 +455,6 @@ public class Laberinto {
          \/____/                                                                                                                                                       
   // @formatter:on
   */
-
   public static LinkedList<Regla> reglasAplicablesDama(int[][] m, int i, int j) {
     LinkedList<Regla> L = new LinkedList<>();
 
@@ -561,37 +464,20 @@ public class Laberinto {
     return L;
   }
 
-  public static boolean laberintoDamaSinHeuristica(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+  public static void laberintoDama(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+    if (!posValida(m, i, j)) {
+      return;
+    }
     m[i][j] = paso;
     if (i == iFin && j == jFin) {
-      return true;
+      mostrar(m);
+      c++;
     }
-
     LinkedList<Regla> L1 = reglasAplicablesDama(m, i, j);
     while (!L1.isEmpty()) {
       Regla R = elegirRegla(L1);
-      if (laberintoDamaSinHeuristica(m, R.fil, R.col, iFin, jFin, paso + 1)) {
-        return true;
-      }
+      laberintoDama(m, R.fil, R.col, iFin, jFin, paso + 1);
       m[R.fil][R.col] = 0;
     }
-    return false;
-  }
-
-  public static boolean laberintoDamaConHeuristica(int[][] m, int i, int j, int iFin, int jFin, int paso) {
-    m[i][j] = paso;
-    if (i == iFin && j == jFin) {
-      return true;
-    }
-
-    LinkedList<Regla> L1 = reglasAplicablesDama(m, i, j);
-    while (!L1.isEmpty()) {
-      Regla R = elegirMejorRegla(L1, iFin, jFin);
-      if (laberintoDamaConHeuristica(m, R.fil, R.col, iFin, jFin, paso + 1)) {
-        return true;
-      }
-      m[R.fil][R.col] = 0;
-    }
-    return false;
   }
 }

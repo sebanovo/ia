@@ -1,5 +1,7 @@
 1.- El problema de los Sumandos y Factores. (Además para cada uno de ellos hacer un ejercicio adicional, interesante)
+
 2.- El problema de la Mochila. (Además, implementar para Objetos con varios atributos)
+
 3.- El problema de Combinaciones, Permutaciones. (Además implementar una aplicación cualquiera del práctico)
 
 

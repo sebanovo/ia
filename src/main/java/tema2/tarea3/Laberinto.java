@@ -3,6 +3,35 @@ package tema2.tarea3;
 import java.util.*;
 
 public class Laberinto {
+  public static class Regla {
+
+    public int fil;
+    public int col;
+
+    public Regla(int i, int j) {
+      this.fil = i;
+      this.col = j;
+    }
+  }
+
+  public static boolean posValida(int[][] m, int i, int j) {
+    return i >= 0 && i < m.length && j >= 0 && j < m[i].length && m[i][j] == 0;
+  }
+
+  public static void mostrar(int[][] m) {
+    String s = "";
+    for (int i = 0; i < m.length; i++) {
+      for (int j = 0; j < m[i].length; j++) {
+        s = s + m[i][j] + "\t";
+      }
+      s = s + "\n";
+    }
+    System.out.println(s);
+  }
+
+  public static Regla elegirRegla(LinkedList<Regla> L1) {
+    return L1.removeFirst();
+  }
   /*
    * Dado una matriz de n x m, inicialmente con valores de ceros (Sin Atajos).
    * Implementar Algoritmos con llamadas recursivas desde un ciclo, para cada uno
@@ -43,20 +72,8 @@ public class Laberinto {
    * inicial a una posición final. Además, mostrar la cantidad de soluciones
    * posibles.
    */
-  public static class Regla {
 
-    public int fil;
-    public int col;
-
-    public Regla(int i, int j) {
-      this.fil = i;
-      this.col = j;
-    }
-  }
-
-  public static boolean posValida(int[][] m, int i, int j) {
-    return i >= 0 && i < m.length && j >= 0 && j < m[i].length && m[i][j] == 0;
-  }
+  public static int c = 0;
 
   public static LinkedList<Regla> reglasAplicablesRey(int[][] m, int i, int j) {
     LinkedList<Regla> L1 = new LinkedList<>();
@@ -74,23 +91,6 @@ public class Laberinto {
     }
     return L1;
   }
-
-  public static void mostrar(int[][] m) {
-    String s = "";
-    for (int i = 0; i < m.length; i++) {
-      for (int j = 0; j < m[i].length; j++) {
-        s = s + m[i][j] + "\t";
-      }
-      s = s + "\n";
-    }
-    System.out.println(s);
-  }
-
-  public static Regla elegirRegla(LinkedList<Regla> L1) {
-    return L1.removeFirst();
-  }
-
-  public static int c = 0;
 
   public static void laberintoReyA(int[][] m, int i, int j, int iFin, int jFin, int paso) {
     if (!posValida(m, i, j)) {
@@ -604,7 +604,7 @@ public class Laberinto {
   }
 
   /*
-  Torres 
+  Torre 
   // @formatter:off
       _____                   _______                   _____              
      /\    \                 /::\    \                 /\    \             
@@ -656,7 +656,7 @@ public class Laberinto {
    * inicial a una posición final. Además, mostrar la cantidad de soluciones
    * posibles.
    */
-  public static LinkedList<Regla> reglasAplicablesTorres(int[][] m, int i, int j) {
+  public static LinkedList<Regla> reglasAplicablesTorre(int[][] m, int i, int j) {
     LinkedList<Regla> L1 = new LinkedList<>();
     int j1 = j - 1;
     while (posValida(m, i, j1)) { // ⬆
@@ -682,7 +682,7 @@ public class Laberinto {
     return L1;
   }
 
-  public static void laberintoTorresA(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+  public static void laberintoTorreA(int[][] m, int i, int j, int iFin, int jFin, int paso) {
     if (!posValida(m, i, j)) {
       return;
     }
@@ -691,10 +691,10 @@ public class Laberinto {
       mostrar(m);
       c++;
     }
-    LinkedList<Regla> L1 = reglasAplicablesTorres(m, i, j);
+    LinkedList<Regla> L1 = reglasAplicablesTorre(m, i, j);
     while (!L1.isEmpty()) {
       Regla R = elegirRegla(L1);
-      laberintoTorresA(m, R.fil, R.col, iFin, jFin, paso + 1);
+      laberintoTorreA(m, R.fil, R.col, iFin, jFin, paso + 1);
       m[R.fil][R.col] = 0;
     }
   }
@@ -705,7 +705,7 @@ public class Laberinto {
    * inicial a una posición final tal que se visiten todas las casillas de la
    * matriz. Además, mostrar la cantidad de soluciones posibles.
    */
-  public static void laberintoTorresB(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+  public static void laberintoTorreB(int[][] m, int i, int j, int iFin, int jFin, int paso) {
     if (!posValida(m, i, j)) {
       return;
     }
@@ -716,10 +716,10 @@ public class Laberinto {
         c++;
       }
     }
-    LinkedList<Regla> L1 = reglasAplicablesTorres(m, i, j);
+    LinkedList<Regla> L1 = reglasAplicablesTorre(m, i, j);
     while (!L1.isEmpty()) {
       Regla R = elegirRegla(L1);
-      laberintoTorresB(m, R.fil, R.col, iFin, jFin, paso + 1);
+      laberintoTorreB(m, R.fil, R.col, iFin, jFin, paso + 1);
       m[R.fil][R.col] = 0;
     }
   }
@@ -730,7 +730,7 @@ public class Laberinto {
    * inicial a una posición final tal que NO se visiten todas las casillas de la
    * matriz. Además, mostrar la cantidad de soluciones posibles.
    */
-  public static void laberintoTorresC(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+  public static void laberintoTorreC(int[][] m, int i, int j, int iFin, int jFin, int paso) {
     if (!posValida(m, i, j)) {
       return;
     }
@@ -741,10 +741,10 @@ public class Laberinto {
         c++;
       }
     }
-    LinkedList<Regla> L1 = reglasAplicablesTorres(m, i, j);
+    LinkedList<Regla> L1 = reglasAplicablesTorre(m, i, j);
     while (!L1.isEmpty()) {
       Regla R = elegirRegla(L1);
-      laberintoTorresC(m, R.fil, R.col, iFin, jFin, paso + 1);
+      laberintoTorreC(m, R.fil, R.col, iFin, jFin, paso + 1);
       m[R.fil][R.col] = 0;
     }
   }
@@ -755,7 +755,7 @@ public class Laberinto {
    * una posición inicial a una posición final. Además, mostrar la cantidad de
    * soluciones posibles.
    */
-  public static void laberintoTorresDAux(int[][] m, LinkedList<int[][]> L, int i, int j, int iFin, int jFin,
+  public static void laberintoTorreDAux(int[][] m, LinkedList<int[][]> L, int i, int j, int iFin, int jFin,
       int paso) {
     if (!posValida(m, i, j)) {
       return;
@@ -764,17 +764,17 @@ public class Laberinto {
     if (i == iFin && j == jFin) {
       L.add(Arrays.stream(m).map(fila -> fila.clone()).toArray($ -> m.clone()));
     }
-    LinkedList<Regla> L1 = reglasAplicablesTorres(m, i, j);
+    LinkedList<Regla> L1 = reglasAplicablesTorre(m, i, j);
     while (!L1.isEmpty()) {
       Regla R = elegirRegla(L1);
-      laberintoTorresDAux(m, L, R.fil, R.col, iFin, jFin, paso + 1);
+      laberintoTorreDAux(m, L, R.fil, R.col, iFin, jFin, paso + 1);
       m[R.fil][R.col] = 0;
     }
   }
 
-  public static void laberintoTorresD(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+  public static void laberintoTorreD(int[][] m, int i, int j, int iFin, int jFin, int paso) {
     LinkedList<int[][]> soluciones = new LinkedList<>();
-    laberintoTorresDAux(m, soluciones, i, j, iFin, jFin, paso);
+    laberintoTorreDAux(m, soluciones, i, j, iFin, jFin, paso);
     LinkedList<int[][]> solucionesMaximas = new LinkedList<>();
 
     // filtrar las soluciones que sean maximas
@@ -808,7 +808,7 @@ public class Laberinto {
    * una posición inicial a una posición final. Además, mostrar la cantidad de
    * soluciones posibles.
    */
-  public static void laberintoTorresEAux(int[][] m, LinkedList<int[][]> L, int i, int j, int iFin, int jFin,
+  public static void laberintoTorreEAux(int[][] m, LinkedList<int[][]> L, int i, int j, int iFin, int jFin,
       int paso) {
     if (!posValida(m, i, j)) {
       return;
@@ -817,17 +817,17 @@ public class Laberinto {
     if (i == iFin && j == jFin) {
       L.add(Arrays.stream(m).map(fila -> fila.clone()).toArray($ -> m.clone()));
     }
-    LinkedList<Regla> L1 = reglasAplicablesTorres(m, i, j);
+    LinkedList<Regla> L1 = reglasAplicablesTorre(m, i, j);
     while (!L1.isEmpty()) {
       Regla R = elegirRegla(L1);
-      laberintoTorresEAux(m, L, R.fil, R.col, iFin, jFin, paso + 1);
+      laberintoTorreEAux(m, L, R.fil, R.col, iFin, jFin, paso + 1);
       m[R.fil][R.col] = 0;
     }
   }
 
-  public static void laberintoTorresE(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+  public static void laberintoTorreE(int[][] m, int i, int j, int iFin, int jFin, int paso) {
     LinkedList<int[][]> soluciones = new LinkedList<>();
-    laberintoTorresEAux(m, soluciones, i, j, iFin, jFin, paso);
+    laberintoTorreEAux(m, soluciones, i, j, iFin, jFin, paso);
     LinkedList<int[][]> solucionesMinimas = new LinkedList<>();
 
     // filtrar las soluciones que sean minimas
@@ -859,7 +859,7 @@ public class Laberinto {
    * f) Algoritmo para resolver cualquiera de los incisos anteriores utilizando
    * una Lista de Matrices.
    */
-  public static void laberintoTorres(int[][] m, LinkedList<int[][]> L, int i, int j, int iFin, int jFin, int paso) {
+  public static void laberintoTorre(int[][] m, LinkedList<int[][]> L, int i, int j, int iFin, int jFin, int paso) {
     if (!posValida(m, i, j)) {
       return;
     }
@@ -868,10 +868,10 @@ public class Laberinto {
       L.add(Arrays.stream(m).map(fila -> fila.clone()).toArray($ -> m.clone()));
       c++;
     }
-    LinkedList<Regla> L1 = reglasAplicablesTorres(m, i, j);
+    LinkedList<Regla> L1 = reglasAplicablesTorre(m, i, j);
     while (!L1.isEmpty()) {
       Regla R = elegirRegla(L1);
-      laberintoTorres(m, L, R.fil, R.col, iFin, jFin, paso + 1);
+      laberintoTorre(m, L, R.fil, R.col, iFin, jFin, paso + 1);
       m[R.fil][R.col] = 0;
     }
   }
@@ -1215,7 +1215,7 @@ public class Laberinto {
   public static LinkedList<Regla> reglasAplicablesDama(int[][] m, int i, int j) {
     LinkedList<Regla> L = new LinkedList<>();
 
-    L.addAll(reglasAplicablesTorres(m, i, j));
+    L.addAll(reglasAplicablesTorre(m, i, j));
     L.addAll(reglasAplicablesAlfil(m, i, j));
 
     return L;
