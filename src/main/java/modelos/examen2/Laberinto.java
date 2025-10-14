@@ -3,38 +3,40 @@ package modelos.examen2;
 import java.util.*;
 
 public class Laberinto {
-  public static class Regla {
 
-    public int fil;
-    public int col;
+    public static class Regla {
 
-    public Regla(int i, int j) {
-      this.fil = i;
-      this.col = j;
+        public int fil;
+        public int col;
+
+        public Regla(int i, int j) {
+            this.fil = i;
+            this.col = j;
+        }
     }
-  }
 
-  public static boolean posValida(int[][] m, int i, int j) {
-    return i >= 0 && i < m.length && j >= 0 && j < m[i].length && m[i][j] == 0;
-  }
-
-  public static void mostrar(int[][] m) {
-    String s = "";
-    for (int i = 0; i < m.length; i++) {
-      for (int j = 0; j < m[i].length; j++) {
-        s = s + m[i][j] + "\t";
-      }
-      s = s + "\n";
+    public static boolean posValida(int[][] m, int i, int j) {
+        return i >= 0 && i < m.length && j >= 0 && j < m[i].length && m[i][j] == 0;
     }
-    System.out.println(s);
-  }
 
-  public static Regla elegirRegla(LinkedList<Regla> L1) {
-    return L1.removeFirst();
-  }
+    public static void mostrar(int[][] m) {
+        String s = "";
+        for (int i = 0; i < m.length; i++) {
+            for (int j = 0; j < m[i].length; j++) {
+                s = s + m[i][j] + "\t";
+            }
+            s = s + "\n";
+        }
+        System.out.println(s);
+    }
 
-  public static int c = 0;
-  /*
+    public static Regla elegirRegla(LinkedList<Regla> L1) {
+        return L1.removeFirst();
+    }
+
+    public static int c = 0;
+
+    /*
   Rey
   // @formatter:off
           _____                    _____                _____          
@@ -59,43 +61,45 @@ public class Laberinto {
         \:|   |                  \::/    /                             
          \|___|                   \/____/                              
   // @formatter:on
-  */
+     */
 
-  public static LinkedList<Regla> reglasAplicablesRey(int[][] m, int i, int j) {
-    LinkedList<Regla> L1 = new LinkedList<>();
-    if (posValida(m, i, j - 1)) { // ⬆
-      L1.add(new Regla(i, j - 1));
-    }
-    if (posValida(m, i - 1, j)) { // ⬅
-      L1.add(new Regla(i - 1, j));
-    }
-    if (posValida(m, i, j + 1)) { // ⬇
-      L1.add(new Regla(i, j + 1));
-    }
-    if (posValida(m, i + 1, j)) { // ➡
-      L1.add(new Regla(i + 1, j));
-    }
-    return L1;
-  }
+    public static LinkedList<Regla> reglasAplicablesRey(int[][] m, int i, int j) {
+        LinkedList<Regla> L = new LinkedList<>();
 
-  public static void laberintoRey(int[][] m, int i, int j, int iFin, int jFin, int paso) {
-    if (!posValida(m, i, j)) {
-      return;
-    }
-    m[i][j] = paso;
-    if (i == iFin && j == jFin) {
-      mostrar(m);
-      c++;
-    }
-    LinkedList<Regla> L1 = reglasAplicablesRey(m, i, j);
-    while (!L1.isEmpty()) {
-      Regla R = elegirRegla(L1);
-      laberintoRey(m, R.fil, R.col, iFin, jFin, paso + 1);
-      m[R.fil][R.col] = 0;
-    }
-  }
+        int[][] movimientos = {
+                { -1, -1 }, { -1, 0 }, { -1, 1 },
+                { 0, -1 }, { 0, 1 },
+                { 1, -1 }, { 1, 0 }, { 1, 1 }
+        };
 
-  /*
+        for (int[] mov : movimientos) {
+            int ni = i + mov[0];
+            int nj = j + mov[1];
+            if (posValida(m, ni, nj)) {
+                L.add(new Regla(ni, nj));
+            }
+        }
+        return L;
+    }
+
+    public static void laberintoRey(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+        if (!posValida(m, i, j)) {
+            return;
+        }
+        m[i][j] = paso;
+        if (i == iFin && j == jFin) {
+            mostrar(m);
+            c++;
+        }
+        LinkedList<Regla> L1 = reglasAplicablesRey(m, i, j);
+        while (!L1.isEmpty()) {
+            Regla R = elegirRegla(L1);
+            laberintoRey(m, R.fil, R.col, iFin, jFin, paso + 1);
+            m[R.fil][R.col] = 0;
+        }
+    }
+
+    /*
   Caballo
   // @formatter:off
           _____                    _____                    _____          
@@ -163,59 +167,51 @@ public class Laberinto {
         \::/____/                                                          
          ~~                                                                
   // @formatter:on
-  */
-  /*
-   * a) Algoritmo para mostrar todos los caminos posibles desde una posición
-   * inicial a una posición final. Además, mostrar la cantidad de soluciones
-   * posibles.
-   */
-  public static LinkedList<Regla> reglasAplicablesCaballo(int[][] m, int i, int j) {
-    LinkedList<Regla> L1 = new LinkedList<>();
-    if (posValida(m, i - 2, j - 1)) {
-      L1.add(new Regla(i - 2, j - 1));
-    }
-    if (posValida(m, i - 2, j + 1)) {
-      L1.add(new Regla(i - 2, j + 1));
-    }
-    if (posValida(m, i - 1, j + 2)) {
-      L1.add(new Regla(i - 1, j + 2));
-    }
-    if (posValida(m, i + 1, j + 2)) {
-      L1.add(new Regla(i + 1, j + 2));
-    }
-    if (posValida(m, i + 2, j + 1)) {
-      L1.add(new Regla(i + 2, j + 1));
-    }
-    if (posValida(m, i + 2, j - 1)) {
-      L1.add(new Regla(i + 2, j - 1));
-    }
-    if (posValida(m, i + 1, j - 2)) {
-      L1.add(new Regla(i + 1, j - 2));
-    }
-    if (posValida(m, i - 1, j - 2)) {
-      L1.add(new Regla(i - 1, j - 2));
-    }
-    return L1;
-  }
+     */
+    /*
+     * a) Algoritmo para mostrar todos los caminos posibles desde una posición
+     * inicial a una posición final. Además, mostrar la cantidad de soluciones
+     * posibles.
+     */
+    public static LinkedList<Regla> reglasAplicablesCaballo(int[][] m, int i, int j) {
+        LinkedList<Regla> L1 = new LinkedList<>();
 
-  public static void laberintoCaballo(int[][] m, int i, int j, int iFin, int jFin, int paso) {
-    if (!posValida(m, i, j)) {
-      return;
-    }
-    m[i][j] = paso;
-    if (i == iFin && j == jFin) {
-      mostrar(m);
-      c++;
-    }
-    LinkedList<Regla> L1 = reglasAplicablesCaballo(m, i, j);
-    while (!L1.isEmpty()) {
-      Regla R = elegirRegla(L1);
-      laberintoCaballo(m, R.fil, R.col, iFin, jFin, paso + 1);
-      m[R.fil][R.col] = 0;
-    }
-  }
+        int[][] movimientos = {
+                { -2, -1 }, { -2, 1 },
+                { -1, 2 }, { 1, 2 },
+                { 2, 1 }, { 2, -1 },
+                { 1, -2 }, { -1, -2 }
+        };
 
-  /*
+        for (int[] mov : movimientos) {
+            int ni = i + mov[0];
+            int nj = j + mov[1];
+            if (posValida(m, ni, nj)) {
+                L1.add(new Regla(ni, nj));
+            }
+        }
+
+        return L1;
+    }
+
+    public static void laberintoCaballo(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+        if (!posValida(m, i, j)) {
+            return;
+        }
+        m[i][j] = paso;
+        if (i == iFin && j == jFin) {
+            mostrar(m);
+            c++;
+        }
+        LinkedList<Regla> L1 = reglasAplicablesCaballo(m, i, j);
+        while (!L1.isEmpty()) {
+            Regla R = elegirRegla(L1);
+            laberintoCaballo(m, R.fil, R.col, iFin, jFin, paso + 1);
+            m[R.fil][R.col] = 0;
+        }
+    }
+
+    /*
   Torre 
   // @formatter:off
       _____                   _______                   _____              
@@ -262,51 +258,48 @@ public class Laberinto {
         \:|   |                  \::/    /        
          \|___|                   \/____/                                                      
   // @formatter:on
-  */
-  public static LinkedList<Regla> reglasAplicablesTorre(int[][] m, int i, int j) {
-    LinkedList<Regla> L1 = new LinkedList<>();
-    int j1 = j - 1;
-    while (posValida(m, i, j1)) { // ⬆
-      L1.add(new Regla(i, j1));
-      j1 = j1 - 1;
-    }
-    int i1 = i - 1;
-    while (posValida(m, i1, j)) { // ⬅
-      L1.add(new Regla(i1, j));
-      i1 = i1 - 1;
+     */
+    public static LinkedList<Regla> reglasAplicablesTorre(int[][] m, int i, int j) {
+        LinkedList<Regla> L = new LinkedList<>();
+
+        int[][] direcciones = {
+                { -1, 0 }, // arriba
+                { 0, -1 }, // izquierda
+                { 1, 0 }, // abajo
+                { 0, 1 } // derecha
+        };
+
+        for (int[] d : direcciones) {
+            int ni = i + d[0];
+            int nj = j + d[1];
+            while (posValida(m, ni, nj)) {
+                L.add(new Regla(ni, nj));
+                ni += d[0];
+                nj += d[1];
+            }
+        }
+
+        return L;
     }
 
-    j1 = j + 1;
-    while (posValida(m, i, j1)) { // ⬇
-      L1.add(new Regla(i, j1));
-      j1 = j1 + 1;
+    public static void laberintoTorre(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+        if (!posValida(m, i, j)) {
+            return;
+        }
+        m[i][j] = paso;
+        if (i == iFin && j == jFin) {
+            mostrar(m);
+            c++;
+        }
+        LinkedList<Regla> L1 = reglasAplicablesTorre(m, i, j);
+        while (!L1.isEmpty()) {
+            Regla R = elegirRegla(L1);
+            laberintoTorre(m, R.fil, R.col, iFin, jFin, paso + 1);
+            m[R.fil][R.col] = 0;
+        }
     }
-    i1 = i + 1;
-    while (posValida(m, i1, j)) { // ➡
-      L1.add(new Regla(i1, j));
-      i1 = i1 + 1;
-    }
-    return L1;
-  }
 
-  public static void laberintoTorre(int[][] m, int i, int j, int iFin, int jFin, int paso) {
-    if (!posValida(m, i, j)) {
-      return;
-    }
-    m[i][j] = paso;
-    if (i == iFin && j == jFin) {
-      mostrar(m);
-      c++;
-    }
-    LinkedList<Regla> L1 = reglasAplicablesTorre(m, i, j);
-    while (!L1.isEmpty()) {
-      Regla R = elegirRegla(L1);
-      laberintoTorre(m, R.fil, R.col, iFin, jFin, paso + 1);
-      m[R.fil][R.col] = 0;
-    }
-  }
-
-  /*
+    /*
   Alfil
   // @formatter:off
           _____                    _____            _____          
@@ -353,61 +346,48 @@ public class Laberinto {
         \::/    /                \::/    /                         
          \/____/                  \/____/                                                                          
   // @formatter:on
-  */
-  public static LinkedList<Regla> reglasAplicablesAlfil(int[][] m, int i, int j) {
-    LinkedList<Regla> L1 = new LinkedList<>();
-    int i1 = i - 1, j1 = j - 1;
-    while (posValida(m, i1, j1)) { // ↖
-      L1.add(new Regla(i1, j1));
-      i1--;
-      j1--;
+     */
+    public static LinkedList<Regla> reglasAplicablesAlfil(int[][] m, int i, int j) {
+        LinkedList<Regla> L = new LinkedList<>();
+
+        int[][] direcciones = {
+                { -1, -1 }, // ↖
+                { -1, 1 }, // ↙
+                { 1, -1 }, // ↗
+                { 1, 1 } // ↘
+        };
+
+        for (int[] d : direcciones) {
+            int ni = i + d[0];
+            int nj = j + d[1];
+            while (posValida(m, ni, nj)) {
+                L.add(new Regla(ni, nj));
+                ni += d[0];
+                nj += d[1];
+            }
+        }
+
+        return L;
     }
 
-    i1 = i - 1;
-    j1 = j + 1;
-    while (posValida(m, i1, j1)) { // ↙
-      L1.add(new Regla(i1, j1));
-      i1--;
-      j1++;
+    public static void laberintoAlfil(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+        if (!posValida(m, i, j)) {
+            return;
+        }
+        m[i][j] = paso;
+        if (i == iFin && j == jFin) {
+            mostrar(m);
+            c++;
+        }
+        LinkedList<Regla> L1 = reglasAplicablesAlfil(m, i, j);
+        while (!L1.isEmpty()) {
+            Regla R = elegirRegla(L1);
+            laberintoAlfil(m, R.fil, R.col, iFin, jFin, paso + 1);
+            m[R.fil][R.col] = 0;
+        }
     }
 
-    i1 = i + 1;
-    j1 = j - 1;
-    while (posValida(m, i1, j1)) { // ↗
-      L1.add(new Regla(i1, j1));
-      i1++;
-      j1--;
-    }
-
-    i1 = i + 1;
-    j1 = j + 1;
-    while (posValida(m, i1, j1)) { // ↘
-      L1.add(new Regla(i1, j1));
-      i1++;
-      j1++;
-    }
-
-    return L1;
-  }
-
-  public static void laberintoAlfil(int[][] m, int i, int j, int iFin, int jFin, int paso) {
-    if (!posValida(m, i, j)) {
-      return;
-    }
-    m[i][j] = paso;
-    if (i == iFin && j == jFin) {
-      mostrar(m);
-      c++;
-    }
-    LinkedList<Regla> L1 = reglasAplicablesAlfil(m, i, j);
-    while (!L1.isEmpty()) {
-      Regla R = elegirRegla(L1);
-      laberintoAlfil(m, R.fil, R.col, iFin, jFin, paso + 1);
-      m[R.fil][R.col] = 0;
-    }
-  }
-
-  /*
+    /*
   Dama
   // @formatter:off
           _____                    _____                    _____          
@@ -454,30 +434,30 @@ public class Laberinto {
         \::/    /                                                          
          \/____/                                                                                                                                                       
   // @formatter:on
-  */
-  public static LinkedList<Regla> reglasAplicablesDama(int[][] m, int i, int j) {
-    LinkedList<Regla> L = new LinkedList<>();
+     */
+    public static LinkedList<Regla> reglasAplicablesDama(int[][] m, int i, int j) {
+        LinkedList<Regla> L = new LinkedList<>();
 
-    L.addAll(reglasAplicablesTorre(m, i, j));
-    L.addAll(reglasAplicablesAlfil(m, i, j));
+        L.addAll(reglasAplicablesTorre(m, i, j));
+        L.addAll(reglasAplicablesAlfil(m, i, j));
 
-    return L;
-  }
+        return L;
+    }
 
-  public static void laberintoDama(int[][] m, int i, int j, int iFin, int jFin, int paso) {
-    if (!posValida(m, i, j)) {
-      return;
+    public static void laberintoDama(int[][] m, int i, int j, int iFin, int jFin, int paso) {
+        if (!posValida(m, i, j)) {
+            return;
+        }
+        m[i][j] = paso;
+        if (i == iFin && j == jFin) {
+            mostrar(m);
+            c++;
+        }
+        LinkedList<Regla> L1 = reglasAplicablesDama(m, i, j);
+        while (!L1.isEmpty()) {
+            Regla R = elegirRegla(L1);
+            laberintoDama(m, R.fil, R.col, iFin, jFin, paso + 1);
+            m[R.fil][R.col] = 0;
+        }
     }
-    m[i][j] = paso;
-    if (i == iFin && j == jFin) {
-      mostrar(m);
-      c++;
-    }
-    LinkedList<Regla> L1 = reglasAplicablesDama(m, i, j);
-    while (!L1.isEmpty()) {
-      Regla R = elegirRegla(L1);
-      laberintoDama(m, R.fil, R.col, iFin, jFin, paso + 1);
-      m[R.fil][R.col] = 0;
-    }
-  }
 }
