@@ -30,8 +30,8 @@ public class Laberinto {
         System.out.println(s);
     }
 
-    public static Regla elegirRegla(LinkedList<Regla> L1) {
-        return L1.removeFirst();
+    public static Regla elegirRegla(LinkedList<Regla> L) {
+        return L.removeFirst();
     }
 
     public static int c = 0;
@@ -91,9 +91,9 @@ public class Laberinto {
             mostrar(m);
             c++;
         }
-        LinkedList<Regla> L1 = reglasAplicablesRey(m, i, j);
-        while (!L1.isEmpty()) {
-            Regla R = elegirRegla(L1);
+        LinkedList<Regla> L = reglasAplicablesRey(m, i, j);
+        while (!L.isEmpty()) {
+            Regla R = elegirRegla(L);
             laberintoRey(m, R.fil, R.col, iFin, jFin, paso + 1);
             m[R.fil][R.col] = 0;
         }
@@ -174,7 +174,7 @@ public class Laberinto {
      * posibles.
      */
     public static LinkedList<Regla> reglasAplicablesCaballo(int[][] m, int i, int j) {
-        LinkedList<Regla> L1 = new LinkedList<>();
+        LinkedList<Regla> L = new LinkedList<>();
 
         int[][] movimientos = {
                 { -2, -1 }, { -2, 1 },
@@ -187,11 +187,11 @@ public class Laberinto {
             int ni = i + mov[0];
             int nj = j + mov[1];
             if (posValida(m, ni, nj)) {
-                L1.add(new Regla(ni, nj));
+                L.add(new Regla(ni, nj));
             }
         }
 
-        return L1;
+        return L;
     }
 
     public static void laberintoCaballo(int[][] m, int i, int j, int iFin, int jFin, int paso) {
@@ -203,9 +203,9 @@ public class Laberinto {
             mostrar(m);
             c++;
         }
-        LinkedList<Regla> L1 = reglasAplicablesCaballo(m, i, j);
-        while (!L1.isEmpty()) {
-            Regla R = elegirRegla(L1);
+        LinkedList<Regla> L = reglasAplicablesCaballo(m, i, j);
+        while (!L.isEmpty()) {
+            Regla R = elegirRegla(L);
             laberintoCaballo(m, R.fil, R.col, iFin, jFin, paso + 1);
             m[R.fil][R.col] = 0;
         }
@@ -291,9 +291,9 @@ public class Laberinto {
             mostrar(m);
             c++;
         }
-        LinkedList<Regla> L1 = reglasAplicablesTorre(m, i, j);
-        while (!L1.isEmpty()) {
-            Regla R = elegirRegla(L1);
+        LinkedList<Regla> L = reglasAplicablesTorre(m, i, j);
+        while (!L.isEmpty()) {
+            Regla R = elegirRegla(L);
             laberintoTorre(m, R.fil, R.col, iFin, jFin, paso + 1);
             m[R.fil][R.col] = 0;
         }
@@ -379,9 +379,9 @@ public class Laberinto {
             mostrar(m);
             c++;
         }
-        LinkedList<Regla> L1 = reglasAplicablesAlfil(m, i, j);
-        while (!L1.isEmpty()) {
-            Regla R = elegirRegla(L1);
+        LinkedList<Regla> L = reglasAplicablesAlfil(m, i, j);
+        while (!L.isEmpty()) {
+            Regla R = elegirRegla(L);
             laberintoAlfil(m, R.fil, R.col, iFin, jFin, paso + 1);
             m[R.fil][R.col] = 0;
         }
@@ -453,9 +453,9 @@ public class Laberinto {
             mostrar(m);
             c++;
         }
-        LinkedList<Regla> L1 = reglasAplicablesDama(m, i, j);
-        while (!L1.isEmpty()) {
-            Regla R = elegirRegla(L1);
+        LinkedList<Regla> L = reglasAplicablesDama(m, i, j);
+        while (!L.isEmpty()) {
+            Regla R = elegirRegla(L);
             laberintoDama(m, R.fil, R.col, iFin, jFin, paso + 1);
             m[R.fil][R.col] = 0;
         }
