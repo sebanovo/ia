@@ -97,17 +97,19 @@ public class Laberinto {
 
     public static LinkedList<Regla> reglasAplicablesRey(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
-        if (posValida(m, i, j - 1)) {
-            L.add(new Regla(i, j - 1));
-        }
-        if (posValida(m, i - 1, j)) {
-            L.add(new Regla(i - 1, j));
-        }
-        if (posValida(m, i, j + 1)) {
-            L.add(new Regla(i, j + 1));
-        }
-        if (posValida(m, i + 1, j)) {
-            L.add(new Regla(i + 1, j));
+
+        int[][] movimientos = {
+                { -1, -1 }, { -1, 0 }, { -1, 1 },
+                { 0, -1 }, { 0, 1 },
+                { 1, -1 }, { 1, 0 }, { 1, 1 }
+        };
+
+        for (int[] mov : movimientos) {
+            int ni = i + mov[0];
+            int nj = j + mov[1];
+            if (posValida(m, ni, nj)) {
+                L.add(new Regla(ni, nj));
+            }
         }
         return L;
     }
@@ -217,30 +219,22 @@ public class Laberinto {
 
     public static LinkedList<Regla> reglasAplicablesCaballo(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
-        if (posValida(m, i - 2, j - 1)) {
-            L.add(new Regla(i - 2, j - 1));
+
+        int[][] movimientos = {
+                { -2, -1 }, { -2, 1 },
+                { -1, 2 }, { 1, 2 },
+                { 2, 1 }, { 2, -1 },
+                { 1, -2 }, { -1, -2 }
+        };
+
+        for (int[] mov : movimientos) {
+            int ni = i + mov[0];
+            int nj = j + mov[1];
+            if (posValida(m, ni, nj)) {
+                L.add(new Regla(ni, nj));
+            }
         }
-        if (posValida(m, i - 2, j + 1)) {
-            L.add(new Regla(i - 2, j + 1));
-        }
-        if (posValida(m, i - 1, j + 2)) {
-            L.add(new Regla(i - 1, j + 2));
-        }
-        if (posValida(m, i + 1, j + 2)) {
-            L.add(new Regla(i + 1, j + 2));
-        }
-        if (posValida(m, i + 2, j + 1)) {
-            L.add(new Regla(i + 2, j + 1));
-        }
-        if (posValida(m, i + 2, j - 1)) {
-            L.add(new Regla(i + 2, j - 1));
-        }
-        if (posValida(m, i + 1, j - 2)) {
-            L.add(new Regla(i + 1, j - 2));
-        }
-        if (posValida(m, i - 1, j - 2)) {
-            L.add(new Regla(i - 1, j - 2));
-        }
+
         return L;
     }
 
@@ -328,27 +322,24 @@ public class Laberinto {
   */
     public static LinkedList<Regla> reglasAplicablesTorre(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
-        int j1 = j - 1;
-        while (posValida(m, i, j1)) { // ⬆
-            L.add(new Regla(i, j1));
-            j1 = j1 - 1;
-        }
-        int i1 = i - 1;
-        while (posValida(m, i1, j)) { // ⬅
-            L.add(new Regla(i1, j));
-            i1 = i1 - 1;
+
+        int[][] direcciones = {
+                { -1, 0 }, // arriba
+                { 0, -1 }, // izquierda
+                { 1, 0 }, // abajo
+                { 0, 1 } // derecha
+        };
+
+        for (int[] d : direcciones) {
+            int ni = i + d[0];
+            int nj = j + d[1];
+            while (posValida(m, ni, nj)) {
+                L.add(new Regla(ni, nj));
+                ni += d[0];
+                nj += d[1];
+            }
         }
 
-        j1 = j + 1;
-        while (posValida(m, i, j1)) { // ⬇
-            L.add(new Regla(i, j1));
-            j1 = j1 + 1;
-        }
-        i1 = i + 1;
-        while (posValida(m, i1, j)) { // ➡
-            L.add(new Regla(i1, j));
-            i1 = i1 + 1;
-        }
         return L;
     }
 
@@ -436,35 +427,22 @@ public class Laberinto {
 
     public static LinkedList<Regla> reglasAplicablesAlfil(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
-        int i1 = i - 1, j1 = j - 1;
-        while (posValida(m, i1, j1)) { // ↖
-            L.add(new Regla(i1, j1));
-            i1--;
-            j1--;
-        }
 
-        i1 = i - 1;
-        j1 = j + 1;
-        while (posValida(m, i1, j1)) { // ↙
-            L.add(new Regla(i1, j1));
-            i1--;
-            j1++;
-        }
+        int[][] direcciones = {
+                { -1, -1 }, // ↖
+                { -1, 1 }, // ↙
+                { 1, -1 }, // ↗
+                { 1, 1 } // ↘
+        };
 
-        i1 = i + 1;
-        j1 = j - 1;
-        while (posValida(m, i1, j1)) { // ↗
-            L.add(new Regla(i1, j1));
-            i1++;
-            j1--;
-        }
-
-        i1 = i + 1;
-        j1 = j + 1;
-        while (posValida(m, i1, j1)) { // ↘
-            L.add(new Regla(i1, j1));
-            i1++;
-            j1++;
+        for (int[] d : direcciones) {
+            int ni = i + d[0];
+            int nj = j + d[1];
+            while (posValida(m, ni, nj)) {
+                L.add(new Regla(ni, nj));
+                ni += d[0];
+                nj += d[1];
+            }
         }
 
         return L;
