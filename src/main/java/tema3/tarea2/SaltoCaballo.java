@@ -27,7 +27,7 @@ public class SaltoCaballo {
         return i >= 0 && i < m.length && j >= 0 && j < m[i].length && m[i][j] == 0;
     }
 
-    public static LinkedList<Regla> reglasAplicables(int[][] m, int i, int j) {
+    private static LinkedList<Regla> reglasAplicables(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
 
         int[][] movimientos = {
