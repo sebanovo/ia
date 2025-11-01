@@ -123,7 +123,7 @@ public class NReinas {
 
 	/*
 	 * Heuristica 1
-	 * "Siempre elegir la regla del medio"
+	 * "Siempre elegir la regla del medio de lista"
 	 */
 	public static Regla elegirRegla1(LinkedList<Regla> L, int[][] m) {
 		return L.remove((L.size() - 1) / 2);
@@ -148,91 +148,8 @@ public class NReinas {
 
 	/*
 	 * Heuristica 2
-	 * "Siempre elegir la regla que este más al centro de la fila de la matriz."
-	 */
-	private static double distanciaAlCentro(double centro, double columna) {
-		return Math.abs(columna - centro);
-	}
-
-	private static Regla elegirRecla2(LinkedList<Regla> L, int[][] m) {
-		double centro = (m.length - 1) / 2;
-		double distMenor = Double.MAX_VALUE;
-		int posMenor = 0;
-
-		for (int i = 0; i < L.size(); i++) {
-			Regla R = L.get(i);
-			double dist = distanciaAlCentro(centro, R.col);
-
-			if (dist < distMenor) {
-				distMenor = dist;
-				posMenor = i;
-			}
-		}
-
-		return L.remove(posMenor);
-	}
-
-	public static boolean nReinasConHeuristica2(int[][] m, int paso) {
-		if (paso > m.length)
-			return true;
-
-		LinkedList<Regla> L = reglasAplicablesDama(m, paso - 1);
-		while (!L.isEmpty()) {
-			Regla R = elegirRecla2(L, m);
-			m[R.fil][R.col] = paso;
-			if (nReinasConHeuristica2(m, paso + 1)) {
-				return true;
-			}
-			vueltas++;
-			m[R.fil][R.col] = 0;
-		}
-		return false;
-	}
-
-	/*
-	 * Heuristica 3
-	 * "Coloca la reina que este más cerca al borde izquiero o derecho de la fila."
-	 */
-	public static Regla elegirRecla3(LinkedList<Regla> L, int[][] m) {
-		int n = m.length;
-		int distMin = Integer.MAX_VALUE;
-		int indexMejor = -1;
-
-		for (int i = 0; i < L.size(); i++) {
-			Regla R = L.get(i);
-			int dist = Math.min(R.col, n - 1 - R.col);
-
-			if (dist < distMin) {
-				distMin = dist;
-				indexMejor = i;
-			}
-		}
-
-		return L.remove(indexMejor);
-	}
-
-	public static boolean nReinasConHeuristica3(int[][] m, int paso) {
-		if (paso > m.length)
-			return true;
-
-		LinkedList<Regla> L = reglasAplicablesDama(m, paso - 1);
-
-		while (!L.isEmpty()) {
-			Regla R = elegirRecla3(L, m);
-			m[R.fil][R.col] = paso;
-			if (nReinasConHeuristica3(m, paso + 1)) {
-				return true;
-			}
-			vueltas++;
-			m[R.fil][R.col] = 0;
-		}
-		return false;
-	}
-
-	/*
-	 * Heuristica 4
 	 * "Si siempre eliges la casilla con menos opciones futuras, minimizas el
-	 * riesgo de bloquearte luego."
+	 * riesgo de bloquearte luego (heurística de Warnsdorff)."
 	 */
 	public static int getPaso(int[][] m) {
 		int paso = 0;
@@ -245,19 +162,19 @@ public class NReinas {
 		return paso + 1;
 	}
 
-	public static Regla elegirRecla4(LinkedList<Regla> L, int[][] m) {
-		int minOpciones = Integer.MAX_VALUE;
+	public static Regla elegirRegla2(LinkedList<Regla> L, int[][] m) {
+		int cantMovMenor = Integer.MAX_VALUE;
 		int mejor = -1;
 		int paso = getPaso(m);
 
 		for (int i = 0; i < L.size(); i++) {
 			Regla R = L.get(i);
 			m[R.fil][R.col] = paso;
-			int opcionesFuturas = paso < m.length ? reglasAplicablesDama(m, paso).size() : 0;
+			int cantMovActual = paso < m.length ? reglasAplicablesDama(m, paso).size() : 0;
 			m[R.fil][R.col] = 0;
 
-			if (opcionesFuturas < minOpciones) {
-				minOpciones = opcionesFuturas;
+			if (cantMovActual < cantMovMenor) {
+				cantMovMenor = cantMovActual;
 				mejor = i;
 			}
 		}
@@ -265,16 +182,16 @@ public class NReinas {
 		return L.remove(mejor);
 	}
 
-	public static boolean nReinasConHeuristica4(int[][] m, int paso) {
+	public static boolean nReinasConHeuristica2(int[][] m, int paso) {
 		if (paso > m.length)
 			return true;
 
 		LinkedList<Regla> L = reglasAplicablesDama(m, paso - 1);
 
 		while (!L.isEmpty()) {
-			Regla R = elegirRecla4(L, m);
+			Regla R = elegirRegla2(L, m);
 			m[R.fil][R.col] = paso;
-			if (nReinasConHeuristica4(m, paso + 1)) {
+			if (nReinasConHeuristica2(m, paso + 1)) {
 				return true;
 			}
 			vueltas++;
@@ -284,13 +201,13 @@ public class NReinas {
 	}
 
 	/*
-	 * Heuristica 5
+	 * Heuristica 3
 	 * "Si siempre eliges la casilla con menos movimientos futuros, minimizas el
 	 * riesgo de bloquearte luego. Y además aquellas reglas con la misma cantidad de
 	 * movimientos futuros puedes elegir aleatoriamente"
 	 */
 
-	public static Regla elegirRecla5(LinkedList<Regla> L, int[][] m) {
+	public static Regla elegirRegla3(LinkedList<Regla> L, int[][] m) {
 		int cantMovMenor = Integer.MAX_VALUE;
 		ArrayList<Integer> candidatos = new ArrayList<>();
 		int paso = getPaso(m);
@@ -314,6 +231,110 @@ public class NReinas {
 		return L.remove(mejor);
 	}
 
+	public static boolean nReinasConHeuristica3(int[][] m, int paso) {
+		if (paso > m.length)
+			return true;
+
+		LinkedList<Regla> L = reglasAplicablesDama(m, paso - 1);
+
+		while (!L.isEmpty()) {
+			Regla R = elegirRegla3(L, m);
+			m[R.fil][R.col] = paso;
+			if (nReinasConHeuristica3(m, paso + 1)) {
+				return true;
+			}
+			vueltas++;
+			m[R.fil][R.col] = 0;
+		}
+		return false;
+	}
+
+	/*
+	 * Heuristica 4
+	 * Combina 2 heuristica:
+	 * - Elige el movimiento con menor movimiento futuro
+	 * - Elige la regla que este más al centro de la fila de la matriz
+	 */
+	private static double distanciaAlCentro(double centro, double columna) {
+		return Math.abs(columna - centro);
+	}
+
+	public static Regla elegirRegla4(LinkedList<Regla> L, int[][] m) {
+		double centro = (m.length - 1) / 2;
+		double distMenor = Double.MAX_VALUE;
+
+		int cantMovMenor = Integer.MAX_VALUE;
+		int mejor = -1;
+		int paso = getPaso(m);
+
+		for (int i = 0; i < L.size(); i++) {
+			Regla R = L.get(i);
+			m[R.fil][R.col] = paso;
+			int cantMovActual = paso < m.length ? reglasAplicablesDama(m, paso).size() : 0;
+			double distCentro = distanciaAlCentro(centro, R.col);
+			m[R.fil][R.col] = 0;
+
+			if (cantMovActual < cantMovMenor || (cantMovActual == cantMovMenor && distCentro < distMenor)) {
+				cantMovMenor = cantMovActual;
+				distMenor = distCentro;
+				mejor = i;
+			}
+		}
+
+		return L.remove(mejor);
+	}
+
+	public static boolean nReinasConHeuristica4(int[][] m, int paso) {
+		if (paso > m.length)
+			return true;
+
+		LinkedList<Regla> L = reglasAplicablesDama(m, paso - 1);
+		while (!L.isEmpty()) {
+			Regla R = elegirRegla4(L, m);
+			m[R.fil][R.col] = paso;
+			if (nReinasConHeuristica4(m, paso + 1)) {
+				return true;
+			}
+			vueltas++;
+			m[R.fil][R.col] = 0;
+		}
+		return false;
+	}
+
+	/*
+	 * Heuristica 5
+	 * Combina 2 heuristica:
+	 * - Elige el movimiento con menor movimiento futuro
+	 * - Elige el movimiento más apegado o cercano a cualquier borde
+	 */
+	private static int distanciaABorde(int n, int i, int j) {
+		return Math.min(Math.min(i, n - 1 - i), Math.min(j, n - 1 - j));
+	}
+
+	public static Regla elegirRegla5(LinkedList<Regla> L, int[][] m) {
+		int distBordeMenor = Integer.MAX_VALUE;
+
+		int cantMovMenor = Integer.MAX_VALUE;
+		int mejor = -1;
+		int paso = getPaso(m);
+
+		for (int i = 0; i < L.size(); i++) {
+			Regla R = L.get(i);
+			m[R.fil][R.col] = paso;
+			int cantMovActual = paso < m.length ? reglasAplicablesDama(m, paso).size() : 0;
+			int distBordeActual = distanciaABorde(m.length, R.fil, R.col);
+			m[R.fil][R.col] = 0;
+
+			if (cantMovActual < cantMovMenor || (cantMovActual == cantMovMenor && distBordeActual < distBordeMenor)) {
+				cantMovMenor = cantMovActual;
+				distBordeMenor = distBordeActual;
+				mejor = i;
+			}
+		}
+
+		return L.remove(mejor);
+	}
+
 	public static boolean nReinasConHeuristica5(int[][] m, int paso) {
 		if (paso > m.length)
 			return true;
@@ -321,9 +342,9 @@ public class NReinas {
 		LinkedList<Regla> L = reglasAplicablesDama(m, paso - 1);
 
 		while (!L.isEmpty()) {
-			Regla R = elegirRecla5(L, m);
+			Regla R = elegirRegla5(L, m);
 			m[R.fil][R.col] = paso;
-			if (nReinasConHeuristica5(m, paso + 1)) {
+			if (nReinasConHeuristica3(m, paso + 1)) {
 				return true;
 			}
 			vueltas++;
