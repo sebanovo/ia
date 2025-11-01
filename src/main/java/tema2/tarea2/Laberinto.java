@@ -24,11 +24,11 @@ public class Laberinto {
         }
     }
 
-    public static boolean posValida(int[][] m, int i, int j) {
+    private static boolean posValida(int[][] m, int i, int j) {
         return i >= 0 && i < m.length && j >= 0 && j < m[i].length && m[i][j] == 0;
     }
 
-    public static LinkedList<Regla> reglasAplicables(int[][] m, int i, int j) {
+    private static LinkedList<Regla> reglasAplicables(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
 
         int[][] movimientos = {
@@ -57,7 +57,7 @@ public class Laberinto {
         System.out.println(s);
     }
 
-    public static Regla elegirRegla(LinkedList<Regla> L) {
+    private static Regla elegirRegla(LinkedList<Regla> L) {
         return L.removeFirst();
     }
 
@@ -91,7 +91,7 @@ public class Laberinto {
      * inicial a una posición final tal que se visiten todas las casillas de la
      * matriz. Además, mostrar la cantidad de soluciones posibles.
      */
-    public static boolean tieneCeros(int[][] m) {
+    private static boolean tieneCeros(int[][] m) {
         for (int i = 0; i < m.length; i++) {
             for (int j = 0; j < m[i].length; j++) {
                 if (m[i][j] == 0) {
@@ -150,8 +150,7 @@ public class Laberinto {
      * una posición inicial a una posición final.. Además, mostrar la cantidad de
      * soluciones posibles.
      */
-    public static int longitudMinima = Integer.MAX_VALUE;
-    public static int longitudMaxima = Integer.MIN_VALUE;
+    private static int longitudMaxima = Integer.MIN_VALUE;
 
     public static void laberinto1D(int[][] m, int i, int j, int iFin, int jFin, int paso) {
         if (!posValida(m, i, j)) {
@@ -186,7 +185,7 @@ public class Laberinto {
      * posiciones con valor de cero (paso libre), valor de -1 (atajo o pared).
      * Analizar las salidas y escribir conclusiones.
      */
-    public static boolean posValidaConParedes(int[][] m, int i, int j) {
+    private static boolean posValidaConParedes(int[][] m, int i, int j) {
         return i >= 0 && i < m.length && j >= 0 && j < m[i].length && m[i][j] != -1;
     }
 
@@ -214,7 +213,7 @@ public class Laberinto {
      * Laberinto, también se puede mover una casilla por las diagonales. (8
      * posibilidades de movimientos)
      */
-    public static LinkedList<Regla> reglasAplicablesConDiagonales(int[][] m, int i, int j) {
+    private static LinkedList<Regla> reglasAplicablesConDiagonales(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
 
         int[][] movimientos = {
@@ -255,7 +254,7 @@ public class Laberinto {
      * Laberinto, solo por la diagonales, no horizontal ni vertical. (4
      * posibilidades de movimientos)
      */
-    public static LinkedList<Regla> reglasAplicablesSinDiagonales(int[][] m, int i, int j) {
+    private static LinkedList<Regla> reglasAplicablesSinDiagonales(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
 
         int[][] movimientos = {
@@ -331,7 +330,7 @@ public class Laberinto {
      * 1) y 2). En este caso, avanzar según el movimiento del caballo.
      * (8-posibilidades de movimientos).
      */
-    public static LinkedList<Regla> reglasAplicablesCaballo(int[][] m, int i, int j) {
+    private static LinkedList<Regla> reglasAplicablesCaballo(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
 
         int[][] movimientos = {

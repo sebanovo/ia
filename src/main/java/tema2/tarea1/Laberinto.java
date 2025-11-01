@@ -8,7 +8,7 @@ public class Laberinto {
      * cero, avanzar las casillas en sentido horario con movimientos de izquierda,
      * arriba, derecha y abajo. Hacer Algoritmos para los siguientes:
      */
-    public static boolean posValida(int[][] m, int i, int j) {
+    private static boolean posValida(int[][] m, int i, int j) {
         return i >= 0 && i < m.length && j >= 0 && j < m[i].length && m[i][j] == 0;
     }
 
@@ -53,7 +53,7 @@ public class Laberinto {
      * inicial a una posición final tal que se visiten todas las casillas de la
      * matriz. Además, mostrar la cantidad de soluciones posibles.
      */
-    public static boolean tieneCeros(int[][] m) {
+    private static boolean tieneCeros(int[][] m) {
         for (int i = 0; i < m.length; i++) {
             for (int j = 0; j < m[i].length; j++) {
                 if (m[i][j] == 0) {
@@ -112,8 +112,7 @@ public class Laberinto {
      * una posición inicial a una posición final.. Además, mostrar la cantidad de
      * soluciones posibles.
      */
-    public static int longitudMinima = Integer.MAX_VALUE;
-    public static int longitudMaxima = Integer.MIN_VALUE;
+    private static int longitudMaxima = Integer.MIN_VALUE;
 
     public static void laberinto1D(int[][] m, int i, int j, int iFin, int jFin, int paso) {
         if (!posValida(m, i, j)) {
@@ -149,7 +148,7 @@ public class Laberinto {
      * posiciones con valor de cero (paso libre), valor de -1 (atajo o pared).
      * Analizar las salidas y escribir conclusiones.
      */
-    public static boolean posValidaConParedes(int[][] m, int i, int j) {
+    private static boolean posValidaConParedes(int[][] m, int i, int j) {
         return i >= 0 && i < m.length && j >= 0 && j < m[i].length && m[i][j] != -1;
     }
 

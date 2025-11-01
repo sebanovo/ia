@@ -14,7 +14,7 @@ public class Laberinto {
         }
     }
 
-    public static boolean posValida(int[][] m, int i, int j) {
+    private static boolean posValida(int[][] m, int i, int j) {
         return i >= 0 && i < m.length && j >= 0 && j < m[i].length && m[i][j] == 0;
     }
 
@@ -29,7 +29,7 @@ public class Laberinto {
         System.out.println(s);
     }
 
-    public static Regla elegirRegla(LinkedList<Regla> L1) {
+    private static Regla elegirRegla(LinkedList<Regla> L1) {
         return L1.removeFirst();
     }
     /*
@@ -75,7 +75,7 @@ public class Laberinto {
 
     public static int c = 0;
 
-    public static LinkedList<Regla> reglasAplicablesRey(int[][] m, int i, int j) {
+    private static LinkedList<Regla> reglasAplicablesRey(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
 
         int[][] movimientos = {
@@ -117,7 +117,7 @@ public class Laberinto {
      * inicial a una posición final tal que se visiten todas las casillas de la
      * matriz. Además, mostrar la cantidad de soluciones posibles.
      */
-    public static boolean tieneCeros(int[][] m) {
+    private static boolean tieneCeros(int[][] m) {
         for (int i = 0; i < m.length; i++) {
             for (int j = 0; j < m[i].length; j++) {
                 if (m[i][j] == 0) {
@@ -194,7 +194,7 @@ public class Laberinto {
         }
     }
 
-    public static int contarCeros(int[][] m) {
+    private static int contarCeros(int[][] m) {
         int cantidad = 0;
         for (int i = 0; i < m.length; i++) {
             for (int j = 0; j < m[i].length; j++) {
@@ -382,7 +382,7 @@ public class Laberinto {
      * inicial a una posición final. Además, mostrar la cantidad de soluciones
      * posibles.
      */
-    public static LinkedList<Regla> reglasAplicablesCaballo(int[][] m, int i, int j) {
+    private static LinkedList<Regla> reglasAplicablesCaballo(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
 
         int[][] movimientos = {
@@ -650,7 +650,7 @@ public class Laberinto {
      * inicial a una posición final. Además, mostrar la cantidad de soluciones
      * posibles.
      */
-    public static LinkedList<Regla> reglasAplicablesTorre(int[][] m, int i, int j) {
+    private static LinkedList<Regla> reglasAplicablesTorre(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
 
         int[][] direcciones = {
@@ -920,7 +920,7 @@ public class Laberinto {
      * inicial a una posición final. Además, mostrar la cantidad de soluciones
      * posibles.
      */
-    public static LinkedList<Regla> reglasAplicablesAlfil(int[][] m, int i, int j) {
+    private static LinkedList<Regla> reglasAplicablesAlfil(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
 
         int[][] direcciones = {
@@ -1190,7 +1190,7 @@ public class Laberinto {
      * inicial a una posición final. Además, mostrar la cantidad de soluciones
      * posibles.
      */
-    public static LinkedList<Regla> reglasAplicablesDama(int[][] m, int i, int j) {
+    private static LinkedList<Regla> reglasAplicablesDama(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
 
         L.addAll(reglasAplicablesTorre(m, i, j));

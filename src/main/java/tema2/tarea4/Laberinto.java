@@ -44,19 +44,19 @@ public class Laberinto {
         System.out.println(s);
     }
 
-    public static boolean posValida(int[][] m, int i, int j) {
+    private static boolean posValida(int[][] m, int i, int j) {
         return i >= 0 && i < m.length && j >= 0 && j < m[i].length && m[i][j] == 0;
     }
 
-    public static Regla elegirRegla(LinkedList<Regla> L) {
+    private static Regla elegirRegla(LinkedList<Regla> L) {
         return L.removeFirst();
     }
 
-    public static double distancia(int x1, int y1, int x2, int y2) {
+    private static double distancia(int x1, int y1, int x2, int y2) {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
-    public static Regla elegirMejorRegla(LinkedList<Regla> L, int iFin, int jFin) {
+    private static Regla elegirMejorRegla(LinkedList<Regla> L, int iFin, int jFin) {
         double distMenor = Double.MAX_VALUE;
         int posMenor = 0;
         for (int i = 0; i < L.size(); i++) {
@@ -95,7 +95,7 @@ public class Laberinto {
   // @formatter:on
   */
 
-    public static LinkedList<Regla> reglasAplicablesRey(int[][] m, int i, int j) {
+    private static LinkedList<Regla> reglasAplicablesRey(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
 
         int[][] movimientos = {
@@ -217,7 +217,7 @@ public class Laberinto {
   // @formatter:on
   */
 
-    public static LinkedList<Regla> reglasAplicablesCaballo(int[][] m, int i, int j) {
+    private static LinkedList<Regla> reglasAplicablesCaballo(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
 
         int[][] movimientos = {
@@ -320,7 +320,7 @@ public class Laberinto {
          \|___|                   \/____/                                                      
   // @formatter:on
   */
-    public static LinkedList<Regla> reglasAplicablesTorre(int[][] m, int i, int j) {
+    private static LinkedList<Regla> reglasAplicablesTorre(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
 
         int[][] direcciones = {
@@ -425,7 +425,7 @@ public class Laberinto {
   // @formatter:on
   */
 
-    public static LinkedList<Regla> reglasAplicablesAlfil(int[][] m, int i, int j) {
+    private static LinkedList<Regla> reglasAplicablesAlfil(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
 
         int[][] direcciones = {
@@ -530,7 +530,7 @@ public class Laberinto {
   // @formatter:on
   */
 
-    public static LinkedList<Regla> reglasAplicablesDama(int[][] m, int i, int j) {
+    private static LinkedList<Regla> reglasAplicablesDama(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
 
         L.addAll(reglasAplicablesTorre(m, i, j));

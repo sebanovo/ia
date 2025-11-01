@@ -37,7 +37,7 @@ public class Mochila {
      * pueden transportar en la mochila. (Se asume que existen objetos con pesos
      * iguales)
      */
-    public static boolean todosDiferentes(LinkedList<Integer> L) {
+    private static boolean todosDiferentes(LinkedList<Integer> L) {
 
         for (int i = 0; i < L.size(); i++) {
             for (int j = 0; j < L.size(); j++) {
@@ -117,12 +117,12 @@ public class Mochila {
      * 5. Adicionar al menos 2 consultas cualesquiera sobre los objetos de una
      * mochila.
      */
-    public static boolean esCuadrado(int n) {
+    private static boolean esCuadrado(int n) {
         int raiz = (int) Math.sqrt(n);
         return raiz * raiz == n;
     }
 
-    public static boolean todosCuadrados(LinkedList<Integer> L) {
+    private static boolean todosCuadrados(LinkedList<Integer> L) {
         for (int i = 0; i < L.size(); i++) {
             if (!esCuadrado(L.get(i))) {
                 return false;
@@ -149,13 +149,13 @@ public class Mochila {
         }
     }
 
-    public static boolean esFibonacci(int n) {
+    private static boolean esFibonacci(int n) {
         int n1 = (5 * n * n) + 4;
         int n2 = (5 * n * n) - 4;
         return esCuadrado(n1) || esCuadrado(n2);
     }
 
-    public static boolean todosFibonacci(LinkedList<Integer> L) {
+    private static boolean todosFibonacci(LinkedList<Integer> L) {
         for (int i = 0; i < L.size(); i++) {
             if (!esFibonacci(L.get(i)))
                 return false;

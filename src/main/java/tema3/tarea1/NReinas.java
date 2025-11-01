@@ -48,14 +48,14 @@ public class NReinas {
 		System.out.println(s);
 	}
 
-	public static boolean estanRectasVacias(int[][] m, int i, int j) {
+	private static boolean estanRectasVacias(int[][] m, int i, int j) {
 		int[][] direcciones = {
 				{ 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 }
 		};
 		return estanDireccionesVacias(m, i, j, direcciones);
 	}
 
-	public static boolean estanDiagonalesVacias(int[][] m, int i, int j) {
+	private static boolean estanDiagonalesVacias(int[][] m, int i, int j) {
 		int[][] direcciones = {
 				{ -1, -1 }, { -1, 1 }, { 1, -1 }, { 1, 1 }
 		};
@@ -76,19 +76,19 @@ public class NReinas {
 		return true;
 	}
 
-	public static boolean hayDamaEnRango(int[][] m, int i, int j) {
+	private static boolean hayDamaEnRango(int[][] m, int i, int j) {
 		return !estanDiagonalesVacias(m, i, j) || !estanRectasVacias(m, i, j);
 	}
 
-	public static boolean posValida(int[][] m, int i, int j) {
+	private static boolean posValida(int[][] m, int i, int j) {
 		return i >= 0 && i < m.length && j >= 0 && j < m[i].length && m[i][j] == 0 && !hayDamaEnRango(m, i, j);
 	}
 
-	public static Regla elegirRegla(LinkedList<Regla> L, int[][] m) {
+	private static Regla elegirRegla(LinkedList<Regla> L, int[][] m) {
 		return L.removeFirst();
 	}
 
-	public static LinkedList<Regla> reglasAplicablesDama(int[][] m, int fila) {
+	private static LinkedList<Regla> reglasAplicablesDama(int[][] m, int fila) {
 		LinkedList<Regla> L = new LinkedList<>();
 		for (int k = 0; k < m[fila].length; k++) {
 			if (posValida(m, fila, k))
@@ -125,7 +125,7 @@ public class NReinas {
 	 * Heuristica 1
 	 * "Siempre elegir la regla del medio de lista"
 	 */
-	public static Regla elegirRegla1(LinkedList<Regla> L, int[][] m) {
+	private static Regla elegirRegla1(LinkedList<Regla> L, int[][] m) {
 		return L.remove((L.size() - 1) / 2);
 	}
 
@@ -151,7 +151,7 @@ public class NReinas {
 	 * "Si siempre eliges la casilla con menos opciones futuras, minimizas el
 	 * riesgo de bloquearte luego (heurística de Warnsdorff)."
 	 */
-	public static int getPaso(int[][] m) {
+	private static int getPaso(int[][] m) {
 		int paso = 0;
 		for (int i = 0; i < m.length; i++) {
 			for (int j = 0; j < m[i].length; j++) {
@@ -162,7 +162,7 @@ public class NReinas {
 		return paso + 1;
 	}
 
-	public static Regla elegirRegla2(LinkedList<Regla> L, int[][] m) {
+	private static Regla elegirRegla2(LinkedList<Regla> L, int[][] m) {
 		int cantMovMenor = Integer.MAX_VALUE;
 		int mejor = -1;
 		int paso = getPaso(m);
@@ -207,7 +207,7 @@ public class NReinas {
 	 * movimientos futuros puedes elegir aleatoriamente"
 	 */
 
-	public static Regla elegirRegla3(LinkedList<Regla> L, int[][] m) {
+	private static Regla elegirRegla3(LinkedList<Regla> L, int[][] m) {
 		int cantMovMenor = Integer.MAX_VALUE;
 		ArrayList<Integer> candidatos = new ArrayList<>();
 		int paso = getPaso(m);
@@ -259,7 +259,7 @@ public class NReinas {
 		return Math.abs(columna - centro);
 	}
 
-	public static Regla elegirRegla4(LinkedList<Regla> L, int[][] m) {
+	private static Regla elegirRegla4(LinkedList<Regla> L, int[][] m) {
 		double centro = (m.length - 1) / 2;
 		double distMenor = Double.MAX_VALUE;
 
@@ -311,7 +311,7 @@ public class NReinas {
 		return Math.min(Math.min(i, n - 1 - i), Math.min(j, n - 1 - j));
 	}
 
-	public static Regla elegirRegla5(LinkedList<Regla> L, int[][] m) {
+	private static Regla elegirRegla5(LinkedList<Regla> L, int[][] m) {
 		int distBordeMenor = Integer.MAX_VALUE;
 
 		int cantMovMenor = Integer.MAX_VALUE;
