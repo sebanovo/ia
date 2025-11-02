@@ -84,10 +84,6 @@ public class NReinas {
 		return i >= 0 && i < m.length && j >= 0 && j < m[i].length && m[i][j] == 0 && !hayDamaEnRango(m, i, j);
 	}
 
-	private static Regla elegirRegla(LinkedList<Regla> L, int[][] m) {
-		return L.removeFirst();
-	}
-
 	private static LinkedList<Regla> reglasAplicablesDama(int[][] m, int fila) {
 		LinkedList<Regla> L = new LinkedList<>();
 		for (int k = 0; k < m[fila].length; k++) {
@@ -104,6 +100,10 @@ public class NReinas {
 	 * Sin Heuristica
 	 * "Siempre escoger la primera regla sin pensar."
 	 */
+	private static Regla elegirRegla(LinkedList<Regla> L, int[][] m) {
+		return L.removeFirst();
+	}
+
 	public static boolean nReinasSinHeuristica(int[][] m, int paso) {
 		if (paso > m.length)
 			return true;
