@@ -54,7 +54,7 @@ public class Laberinto {
             }
             s = s + "\n";
         }
-        System.out.println(s);
+        System.out.print(s);
     }
 
     private static Regla elegirRegla(LinkedList<Regla> L) {
@@ -305,7 +305,7 @@ public class Laberinto {
             }
             s += "------------------------\n";
         }
-        System.out.println(s);
+        System.out.print(s);
     }
 
     public static void laberinto5(int[][] m, LinkedList<int[][]> L, int i, int j, int iFin, int jFin, int paso) {

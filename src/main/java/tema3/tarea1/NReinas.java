@@ -45,7 +45,7 @@ public class NReinas {
 			}
 			s = s + "\n";
 		}
-		System.out.println(s);
+		System.out.print(s);
 	}
 
 	private static boolean estanRectasVacias(int[][] m, int i, int j) {
@@ -204,7 +204,7 @@ public class NReinas {
 	 * Heuristica 3
 	 * "Si siempre eliges la casilla con menos movimientos futuros, minimizas el
 	 * riesgo de bloquearte luego. Y además aquellas reglas con la misma cantidad de
-	 * movimientos futuros puedes elegir aleatoriamente"
+	 * movimientos futuros puedes elegir aleatoriamente."
 	 */
 
 	private static Regla elegirRegla3(LinkedList<Regla> L, int[][] m) {

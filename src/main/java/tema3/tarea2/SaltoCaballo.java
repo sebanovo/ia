@@ -20,7 +20,7 @@ public class SaltoCaballo {
             }
             s = s + "\n";
         }
-        System.out.println(s);
+        System.out.print(s);
     }
 
     private static boolean posValida(int[][] m, int i, int j) {
@@ -162,9 +162,6 @@ public class SaltoCaballo {
                 candidatos.add(R);
             }
         }
-
-        if (candidatos.isEmpty())
-            return null;
 
         Regla mejor = candidatos.get(new Random().nextInt(candidatos.size()));
         L.remove(mejor);

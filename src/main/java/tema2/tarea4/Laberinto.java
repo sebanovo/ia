@@ -41,7 +41,7 @@ public class Laberinto {
             }
             s = s + "\n";
         }
-        System.out.println(s);
+        System.out.print(s);
     }
 
     private static boolean posValida(int[][] m, int i, int j) {

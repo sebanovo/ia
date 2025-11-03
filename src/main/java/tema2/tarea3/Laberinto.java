@@ -26,7 +26,7 @@ public class Laberinto {
             }
             s = s + "\n";
         }
-        System.out.println(s);
+        System.out.print(s);
     }
 
     private static Regla elegirRegla(LinkedList<Regla> L1) {
