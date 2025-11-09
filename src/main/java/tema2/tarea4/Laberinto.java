@@ -68,6 +68,7 @@ public class Laberinto {
         }
         return L.remove(posMenor);
     }
+
     /*
   Rey
   // @formatter:off
@@ -94,6 +95,7 @@ public class Laberinto {
          \|___|                   \/____/                              
   // @formatter:on
   */
+    public static int vueltas = 0;
 
     private static LinkedList<Regla> reglasAplicablesRey(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
@@ -127,6 +129,7 @@ public class Laberinto {
                 return true;
             }
             m[R.fil][R.col] = 0;
+            vueltas++;
         }
         return false;
     }
@@ -144,6 +147,7 @@ public class Laberinto {
                 return true;
             }
             m[R.fil][R.col] = 0;
+            vueltas++;
         }
         return false;
     }
@@ -251,6 +255,7 @@ public class Laberinto {
                 return true;
             }
             m[R.fil][R.col] = 0;
+            vueltas++;
         }
         return false;
     }
@@ -268,6 +273,7 @@ public class Laberinto {
                 return true;
             }
             m[R.fil][R.col] = 0;
+            vueltas++;
         }
         return false;
     }
@@ -356,6 +362,7 @@ public class Laberinto {
                 return true;
             }
             m[R.fil][R.col] = 0;
+            vueltas++;
         }
         return false;
     }
@@ -373,6 +380,7 @@ public class Laberinto {
                 return true;
             }
             m[R.fil][R.col] = 0;
+            vueltas++;
         }
         return false;
     }
@@ -461,6 +469,7 @@ public class Laberinto {
                 return true;
             }
             m[R.fil][R.col] = 0;
+            vueltas++;
         }
         return false;
     }
@@ -478,6 +487,7 @@ public class Laberinto {
                 return true;
             }
             m[R.fil][R.col] = 0;
+            vueltas++;
         }
         return false;
     }
@@ -552,6 +562,7 @@ public class Laberinto {
                 return true;
             }
             m[R.fil][R.col] = 0;
+            vueltas++;
         }
         return false;
     }
@@ -569,6 +580,7 @@ public class Laberinto {
                 return true;
             }
             m[R.fil][R.col] = 0;
+            vueltas++;
         }
         return false;
     }
