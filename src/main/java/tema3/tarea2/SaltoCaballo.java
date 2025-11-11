@@ -27,7 +27,7 @@ public class SaltoCaballo {
         return i >= 0 && i < m.length && j >= 0 && j < m[i].length && m[i][j] == 0;
     }
 
-    private static LinkedList<Regla> reglasAplicables(int[][] m, int i, int j) {
+    private static LinkedList<Regla> reglasAplicablesCaballo(int[][] m, int i, int j) {
         LinkedList<Regla> L = new LinkedList<>();
 
         int[][] movimientos = {
@@ -63,7 +63,7 @@ public class SaltoCaballo {
         if (paso >= m.length * m.length) {
             return true;
         }
-        LinkedList<Regla> L = reglasAplicables(m, i, j);
+        LinkedList<Regla> L = reglasAplicablesCaballo(m, i, j);
         while (!L.isEmpty()) {
             Regla R = elegirRegla(L);
             if (saltoCaballoSinHeuristica(m, R.fil, R.col, paso + 1)) {
@@ -89,10 +89,10 @@ public class SaltoCaballo {
         if (paso >= m.length * m.length) {
             return true;
         }
-        LinkedList<Regla> L = reglasAplicables(m, i, j);
+        LinkedList<Regla> L = reglasAplicablesCaballo(m, i, j);
         while (!L.isEmpty()) {
             Regla R = elegirRegla1(L, m);
-            if (saltoCaballoConHeuristica3(m, R.fil, R.col, paso + 1)) {
+            if (saltoCaballoConHeuristica1(m, R.fil, R.col, paso + 1)) {
                 return true;
             }
             vueltas++;
@@ -112,7 +112,7 @@ public class SaltoCaballo {
         Regla mejor = null;
 
         for (Regla R : L) {
-            int cantMovActual = reglasAplicables(m, R.fil, R.col).size();
+            int cantMovActual = reglasAplicablesCaballo(m, R.fil, R.col).size();
 
             if (cantMovActual < cantMovMenor) {
                 cantMovMenor = cantMovActual;
@@ -129,7 +129,7 @@ public class SaltoCaballo {
         if (paso >= m.length * m.length) {
             return true;
         }
-        LinkedList<Regla> L = reglasAplicables(m, i, j);
+        LinkedList<Regla> L = reglasAplicablesCaballo(m, i, j);
         while (!L.isEmpty()) {
             Regla R = elegirRegla2(L, m);
             if (saltoCaballoConHeuristica2(m, R.fil, R.col, paso + 1)) {
@@ -153,7 +153,7 @@ public class SaltoCaballo {
         List<Regla> candidatos = new ArrayList<>();
 
         for (Regla R : L) {
-            int cantMovActual = reglasAplicables(m, R.fil, R.col).size();
+            int cantMovActual = reglasAplicablesCaballo(m, R.fil, R.col).size();
             if (cantMovActual < cantMovMenor) {
                 cantMovMenor = cantMovActual;
                 candidatos.clear();
@@ -173,7 +173,7 @@ public class SaltoCaballo {
         if (paso >= m.length * m.length) {
             return true;
         }
-        LinkedList<Regla> L = reglasAplicables(m, i, j);
+        LinkedList<Regla> L = reglasAplicablesCaballo(m, i, j);
         while (!L.isEmpty()) {
             Regla R = elegirRegla3(L, m);
             if (saltoCaballoConHeuristica3(m, R.fil, R.col, paso + 1)) {
@@ -204,7 +204,7 @@ public class SaltoCaballo {
         Regla mejor = null;
 
         for (Regla R : L) {
-            int cantMovActual = reglasAplicables(m, R.fil, R.col).size();
+            int cantMovActual = reglasAplicablesCaballo(m, R.fil, R.col).size();
             double distCentro = distanciaAlCentro(centro, R.col);
 
             if (cantMovActual < cantMovMenor || (cantMovActual == cantMovMenor && distCentro < distMenor)) {
@@ -223,7 +223,7 @@ public class SaltoCaballo {
         if (paso >= m.length * m.length) {
             return true;
         }
-        LinkedList<Regla> L = reglasAplicables(m, i, j);
+        LinkedList<Regla> L = reglasAplicablesCaballo(m, i, j);
         while (!L.isEmpty()) {
             Regla R = elegirRegla4(L, m);
             if (saltoCaballoConHeuristica4(m, R.fil, R.col, paso + 1)) {
@@ -252,7 +252,7 @@ public class SaltoCaballo {
         Regla mejor = null;
 
         for (Regla R : L) {
-            int cantMovActual = reglasAplicables(m, R.fil, R.col).size();
+            int cantMovActual = reglasAplicablesCaballo(m, R.fil, R.col).size();
             int distBordeActual = distanciaABorde(m.length, R.fil, R.col);
 
             if (cantMovActual < cantMovMenor || (cantMovActual == cantMovMenor && distBordeActual < distABordeMenor)) {
@@ -271,7 +271,7 @@ public class SaltoCaballo {
         if (paso >= m.length * m.length) {
             return true;
         }
-        LinkedList<Regla> L = reglasAplicables(m, i, j);
+        LinkedList<Regla> L = reglasAplicablesCaballo(m, i, j);
         while (!L.isEmpty()) {
             Regla R = elegirRegla5(L, m);
             if (saltoCaballoConHeuristica5(m, R.fil, R.col, paso + 1)) {

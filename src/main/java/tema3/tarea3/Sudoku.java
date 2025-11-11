@@ -83,7 +83,7 @@ public class Sudoku {
         return false;
     }
 
-    private static LinkedList<Integer> reglasAplicables(int[][] m, int i, int j) {
+    private static LinkedList<Integer> reglasAplicablesSudoku(int[][] m, int i, int j) {
         LinkedList<Integer> L = new LinkedList<>();
         for (int valor = 1; valor <= m.length; valor++) {
             if (!estaEnFila(m, i, valor) && !estaEnColumna(m, j, valor) && !estaEnRegion(m, i, j, valor)) {
@@ -132,7 +132,7 @@ public class Sudoku {
             sudokuOriginal(m, i, j + 1);
         }
 
-        LinkedList<Integer> L = reglasAplicables(m, i, j);
+        LinkedList<Integer> L = reglasAplicablesSudoku(m, i, j);
         System.out.print(L);
         while (!L.isEmpty()) {
             m[i][j] = elegirRegla(L);
@@ -165,7 +165,7 @@ public class Sudoku {
         if (m[i][j] != 0)
             return sudokuSinHeuristica(m, i, j + 1);
 
-        LinkedList<Integer> L = reglasAplicables(m, i, j);
+        LinkedList<Integer> L = reglasAplicablesSudoku(m, i, j);
         while (!L.isEmpty()) {
             m[i][j] = elegirRegla(L);
             if (sudokuSinHeuristicaOriginal(m, i, j + 1)) {
@@ -203,7 +203,7 @@ public class Sudoku {
         if (m[i][j] != 0)
             return sudokuConHeuristica1Original(m, i, j + 1);
 
-        LinkedList<Integer> L = reglasAplicables(m, i, j);
+        LinkedList<Integer> L = reglasAplicablesSudoku(m, i, j);
         while (!L.isEmpty()) {
             m[i][j] = elegirRegla1(L);
             if (sudokuConHeuristica1Original(m, i, j + 1)) {
@@ -232,9 +232,9 @@ public class Sudoku {
                 if (i + 1 >= m.length) {
                     return L.removeFirst();
                 }
-                cantMovActual = reglasAplicables(m, i + 1, 0).size();
+                cantMovActual = reglasAplicablesSudoku(m, i + 1, 0).size();
             } else {
-                cantMovActual = reglasAplicables(m, i, j + 1).size();
+                cantMovActual = reglasAplicablesSudoku(m, i, j + 1).size();
             }
             m[i][j] = 0;
             if (cantMovActual < cantMovMenor) {
@@ -264,7 +264,7 @@ public class Sudoku {
         if (m[i][j] != 0)
             return sudokuConHeuristica2Original(m, i, j + 1);
 
-        LinkedList<Integer> L = reglasAplicables(m, i, j);
+        LinkedList<Integer> L = reglasAplicablesSudoku(m, i, j);
         while (!L.isEmpty()) {
             m[i][j] = elegirRegla2(L, m, i, j);
             if (sudokuConHeuristica2Original(m, i, j + 1)) {
@@ -293,9 +293,9 @@ public class Sudoku {
                 if (i + 1 >= m.length) {
                     return L.removeFirst();
                 }
-                cantMovActual = reglasAplicables(m, i + 1, 0).size();
+                cantMovActual = reglasAplicablesSudoku(m, i + 1, 0).size();
             } else {
-                cantMovActual = reglasAplicables(m, i, j + 1).size();
+                cantMovActual = reglasAplicablesSudoku(m, i, j + 1).size();
             }
             m[i][j] = 0;
             if (cantMovActual < cantMovMenor) {
@@ -329,7 +329,7 @@ public class Sudoku {
         if (m[i][j] != 0)
             return sudokuConHeuristica3Original(m, i, j + 1);
 
-        LinkedList<Integer> L = reglasAplicables(m, i, j);
+        LinkedList<Integer> L = reglasAplicablesSudoku(m, i, j);
         while (!L.isEmpty()) {
             m[i][j] = elegirRegla3(L, m, i, j);
             if (sudokuConHeuristica3Original(m, i, j + 1)) {
