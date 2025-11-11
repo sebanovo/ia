@@ -77,7 +77,7 @@ public class NReinas {
      * Sin Heuristica
      * "Siempre escoger la primera regla sin pensar."
      */
-    private static Regla elegirRegla(LinkedList<Regla> L, int[][] m) {
+    private static Regla elegirRegla(LinkedList<Regla> L) {
         return L.removeFirst();
     }
 
@@ -87,7 +87,7 @@ public class NReinas {
 
         LinkedList<Regla> L = reglasAplicablesDama(m, paso - 1); // paso - 1 es la fila
         while (!L.isEmpty()) {
-            Regla R = elegirRegla(L, m);
+            Regla R = elegirRegla(L);
             m[R.fil][R.col] = paso;
             if (nReinas1(m, paso + 1)) {
                 return true;
@@ -102,7 +102,7 @@ public class NReinas {
      * Heuristica
      * "Siempre elegir la regla del medio de lista"
      */
-    private static Regla elegirRegla1(LinkedList<Regla> L, int[][] m) {
+    private static Regla elegirRegla1(LinkedList<Regla> L) {
         return L.remove((L.size() - 1) / 2);
     }
 
@@ -112,7 +112,7 @@ public class NReinas {
 
         LinkedList<Regla> L = reglasAplicablesDama(m, paso - 1);
         while (!L.isEmpty()) {
-            Regla R = elegirRegla1(L, m);
+            Regla R = elegirRegla1(L);
             m[R.fil][R.col] = paso;
             if (nReinas2(m, paso + 1)) {
                 return true;

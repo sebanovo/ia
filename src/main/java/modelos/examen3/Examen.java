@@ -158,17 +158,13 @@ public class Examen {
      * Sin Heuristica
      * "Siempre escoger la primera regla sin pensar."
      */
-    private static Regla elegirRegla(LinkedList<Regla> L, int[][] m) {
-        return L.removeFirst();
-    }
-
     public static boolean nReinas1(int[][] m, int paso) {
         if (paso > m.length)
             return true;
 
         LinkedList<Regla> L = reglasAplicablesDama(m, paso - 1); // paso - 1 es la fila
         while (!L.isEmpty()) {
-            Regla R = elegirRegla(L, m);
+            Regla R = elegirRegla(L);
             m[R.fil][R.col] = paso;
             if (nReinas1(m, paso + 1)) {
                 return true;
@@ -183,17 +179,13 @@ public class Examen {
      * Heuristica
      * "Siempre elegir la regla del medio de lista"
      */
-    private static Regla elegirRegla1(LinkedList<Regla> L, int[][] m) {
-        return L.remove((L.size() - 1) / 2);
-    }
-
     public static boolean nReinas2(int[][] m, int paso) {
         if (paso > m.length)
             return true;
 
         LinkedList<Regla> L = reglasAplicablesDama(m, paso - 1);
         while (!L.isEmpty()) {
-            Regla R = elegirRegla1(L, m);
+            Regla R = elegirRegla1(L);
             m[R.fil][R.col] = paso;
             if (nReinas2(m, paso + 1)) {
                 return true;
@@ -263,7 +255,7 @@ public class Examen {
         }
         LinkedList<Regla> L = reglasAplicablesCaballo(m, i, j);
         while (!L.isEmpty()) {
-            Regla R = elegirRegla1(L, m);
+            Regla R = elegirRegla1(L);
             if (saltoCaballo2(m, R.fil, R.col, paso + 1)) {
                 return true;
             }
