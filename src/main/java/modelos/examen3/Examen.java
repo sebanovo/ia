@@ -59,7 +59,7 @@ public class Examen {
      * "Siempre escoger la primera regla sin pensar."
      */
 
-    private static Regla elegirRegla(LinkedList<Regla> L) {
+    private static Regla elegirRegla1(LinkedList<Regla> L) {
         return L.removeFirst();
     }
 
@@ -71,7 +71,7 @@ public class Examen {
 
         LinkedList<Regla> L = reglasAplicablesRey(m, i, j);
         while (!L.isEmpty()) {
-            Regla R = elegirRegla(L);
+            Regla R = elegirRegla1(L);
             if (laberintoRey1(m, R.fil, R.col, iFin, jFin, paso + 1)) {
                 return true;
             }
@@ -85,7 +85,7 @@ public class Examen {
      * Heuristica
      * "Siempre elegir la regla del medio de lista"
      */
-    private static Regla elegirRegla1(LinkedList<Regla> L) {
+    private static Regla elegirRegla2(LinkedList<Regla> L) {
         return L.remove((L.size() - 1) / 2);
     }
 
@@ -97,7 +97,7 @@ public class Examen {
 
         LinkedList<Regla> L = reglasAplicablesRey(m, i, j);
         while (!L.isEmpty()) {
-            Regla R = elegirRegla1(L);
+            Regla R = elegirRegla2(L);
             if (laberintoRey2(m, R.fil, R.col, iFin, jFin, paso + 1)) {
                 return true;
             }
@@ -164,7 +164,7 @@ public class Examen {
 
         LinkedList<Regla> L = reglasAplicablesDama(m, paso - 1); // paso - 1 es la fila
         while (!L.isEmpty()) {
-            Regla R = elegirRegla(L);
+            Regla R = elegirRegla1(L);
             m[R.fil][R.col] = paso;
             if (nReinas1(m, paso + 1)) {
                 return true;
@@ -185,7 +185,7 @@ public class Examen {
 
         LinkedList<Regla> L = reglasAplicablesDama(m, paso - 1);
         while (!L.isEmpty()) {
-            Regla R = elegirRegla1(L);
+            Regla R = elegirRegla2(L);
             m[R.fil][R.col] = paso;
             if (nReinas2(m, paso + 1)) {
                 return true;
@@ -233,7 +233,7 @@ public class Examen {
         }
         LinkedList<Regla> L = reglasAplicablesCaballo(m, i, j);
         while (!L.isEmpty()) {
-            Regla R = elegirRegla(L);
+            Regla R = elegirRegla1(L);
             if (saltoCaballo1(m, R.fil, R.col, paso + 1)) {
                 return true;
             }
@@ -255,7 +255,7 @@ public class Examen {
         }
         LinkedList<Regla> L = reglasAplicablesCaballo(m, i, j);
         while (!L.isEmpty()) {
-            Regla R = elegirRegla1(L);
+            Regla R = elegirRegla2(L);
             if (saltoCaballo2(m, R.fil, R.col, paso + 1)) {
                 return true;
             }
@@ -319,7 +319,7 @@ public class Examen {
      * Sin Heuristica
      * "Siempre escoger la primera regla sin pensar."
      */
-    private static Integer elegirRegla2(LinkedList<Integer> L) {
+    private static Integer elegirRegla3(LinkedList<Integer> L) {
         return L.removeFirst();
     }
 
@@ -343,7 +343,7 @@ public class Examen {
 
         LinkedList<Integer> L = reglasAplicablesSudoku(m, i, j);
         while (!L.isEmpty()) {
-            m[i][j] = elegirRegla2(L);
+            m[i][j] = elegirRegla3(L);
             if (sudoku1Original(m, i, j + 1)) {
                 return true;
             }
@@ -357,7 +357,7 @@ public class Examen {
      * Heuristica
      * "Siempre elegir la regla del medio"
      */
-    private static Integer elegirRegla3(LinkedList<Integer> L) {
+    private static Integer elegirRegla4(LinkedList<Integer> L) {
         return L.remove((L.size() - 1) / 2);
     }
 
@@ -381,7 +381,7 @@ public class Examen {
 
         LinkedList<Integer> L = reglasAplicablesSudoku(m, i, j);
         while (!L.isEmpty()) {
-            m[i][j] = elegirRegla3(L);
+            m[i][j] = elegirRegla4(L);
             if (sudoku2Original(m, i, j + 1)) {
                 return true;
             }

@@ -53,7 +53,7 @@ public class SaltoCaballo {
      * Sin Heuristica
      * "Siempre escoger la primera regla sin pensar."
      */
-    private static Regla elegirRegla(LinkedList<Regla> reglas) {
+    private static Regla elegirRegla1(LinkedList<Regla> reglas) {
         return reglas.removeFirst();
     }
 
@@ -66,7 +66,7 @@ public class SaltoCaballo {
         }
         LinkedList<Regla> L = reglasAplicablesCaballo(m, i, j);
         while (!L.isEmpty()) {
-            Regla R = elegirRegla(L);
+            Regla R = elegirRegla1(L);
             if (saltoCaballo1(m, R.fil, R.col, paso + 1)) {
                 return true;
             }
@@ -81,7 +81,7 @@ public class SaltoCaballo {
      * Heuristica
      * "Siempre elegir la regla del medio"
      */
-    private static Regla elegirRegla1(LinkedList<Regla> L, int[][] m) {
+    private static Regla elegirRegla2(LinkedList<Regla> L, int[][] m) {
         return L.remove((L.size() - 1) / 2);
     }
 
@@ -92,7 +92,7 @@ public class SaltoCaballo {
         }
         LinkedList<Regla> L = reglasAplicablesCaballo(m, i, j);
         while (!L.isEmpty()) {
-            Regla R = elegirRegla1(L, m);
+            Regla R = elegirRegla2(L, m);
             if (saltoCaballo2(m, R.fil, R.col, paso + 1)) {
                 return true;
             }

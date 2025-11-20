@@ -65,7 +65,7 @@ public class Sudoku {
      * Sin Heuristica
      * "Siempre escoger la primera regla sin pensar."
      */
-    private static Integer elegirRegla(LinkedList<Integer> L) {
+    private static Integer elegirRegla1(LinkedList<Integer> L) {
         return L.removeFirst();
     }
 
@@ -89,7 +89,7 @@ public class Sudoku {
 
         LinkedList<Integer> L = reglasAplicablesSudoku(m, i, j);
         while (!L.isEmpty()) {
-            m[i][j] = elegirRegla(L);
+            m[i][j] = elegirRegla1(L);
             if (sudoku1Original(m, i, j + 1)) {
                 return true;
             }
@@ -103,7 +103,7 @@ public class Sudoku {
      * Heuristica
      * "Siempre elegir la regla del medio"
      */
-    private static Integer elegirRegla1(LinkedList<Integer> L) {
+    private static Integer elegirRegla2(LinkedList<Integer> L) {
         return L.remove((L.size() - 1) / 2);
     }
 
@@ -127,7 +127,7 @@ public class Sudoku {
 
         LinkedList<Integer> L = reglasAplicablesSudoku(m, i, j);
         while (!L.isEmpty()) {
-            m[i][j] = elegirRegla1(L);
+            m[i][j] = elegirRegla2(L);
             if (sudoku2Original(m, i, j + 1)) {
                 return true;
             }

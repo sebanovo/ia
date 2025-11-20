@@ -54,7 +54,7 @@ public class Laberinto {
      * "Siempre escoger la primera regla sin pensar."
      */
 
-    private static Regla elegirRegla(LinkedList<Regla> L) {
+    private static Regla elegirRegla1(LinkedList<Regla> L) {
         return L.removeFirst();
     }
 
@@ -66,7 +66,7 @@ public class Laberinto {
 
         LinkedList<Regla> L = reglasAplicablesRey(m, i, j);
         while (!L.isEmpty()) {
-            Regla R = elegirRegla(L);
+            Regla R = elegirRegla1(L);
             if (laberintoRey1(m, R.fil, R.col, iFin, jFin, paso + 1)) {
                 return true;
             }
@@ -80,7 +80,7 @@ public class Laberinto {
      * Heuristica
      * "Siempre elegir la regla del medio de lista"
      */
-    private static Regla elegirRegla1(LinkedList<Regla> L) {
+    private static Regla elegirRegla2(LinkedList<Regla> L) {
         return L.remove((L.size() - 1) / 2);
     }
 
@@ -92,7 +92,7 @@ public class Laberinto {
 
         LinkedList<Regla> L = reglasAplicablesRey(m, i, j);
         while (!L.isEmpty()) {
-            Regla R = elegirRegla1(L);
+            Regla R = elegirRegla2(L);
             if (laberintoRey2(m, R.fil, R.col, iFin, jFin, paso + 1)) {
                 return true;
             }

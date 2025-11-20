@@ -9,10 +9,10 @@ public static int vueltas
 
 // LABERINTO ---------------------------------- 
 // Sin heuristica
-Regla elegirRegla(L)
+Regla elegirRegla1(L)
 boolean laberintoRey1(m, i, j, iFin, jFin, paso)
 // Con heuristica
-Regla elegirRegla1(L)
+Regla elegirRegla2(L)
 boolean laberintoRey2(m, i, j, iFin, jFin, paso)
 
 // NREINAS ----------------------------------
@@ -42,10 +42,10 @@ boolean estaEnRegion(m, i, j, valor)
 L<Integer> reglasAplicablesSudoku(m, i, j)
 
 //  Sin heuristica
-Integer elegirRegla2(L)
+Integer elegirRegla3(L)
 boolean sudoku1(m, i, j)
 
 // Con heuristica
-Integer elegirRegla3(L)
+Integer elegirRegla4(L)
 boolean sudoku2(m, i, j)
 ```
